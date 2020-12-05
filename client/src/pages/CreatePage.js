@@ -23,31 +23,31 @@ export const CreatePage = () => {
 
     return (
         <>
-            <h1>Create Initiative</h1>
-            <div className="row">
-                <div className="col s8 offset-s2">
-                    <div className="input-field">
-                        <input
-                            id="title"
-                            type="text"
-                            value={initiative.title}
-                            onChange={e => setInitiative({...initiative, title: e.target.value})}
-                        />
-                        <label htmlFor="title">Enter title</label>
-                    </div>
-                    <div className="input-field">
-                        <textarea
-                            className="materialize-textarea"
-                            placeholder="Enter content"
-                            id="content"
-                            value={initiative.content}
-                            onChange={e => setInitiative({...initiative, content: e.target.value})}
-                        />
-                    </div>
-                    <div className="input-field">
-                        <button className='btn' onClick={createHandler}>Save</button>
-                    </div>
-                </div>
+            <h1 className={'mt-4 mb-4'}>Create Initiative</h1>
+
+            <div className="input-group mb-3">
+                <input
+                    type="text"
+                    id="title"
+                    className="form-control"
+                    placeholder="Enter title"
+                    value={initiative.title}
+                    onChange={e => setInitiative({...initiative, title: e.target.value})}
+                />
+            </div>
+            <div className="input-group">
+                <textarea
+                    rows={20}
+                    className="form-control"
+                    placeholder="Enter content"
+                    id="content"
+                    value={initiative.content}
+                    onChange={e => setInitiative({...initiative, content: e.target.value})}
+                >
+                </textarea>
+            </div>
+            <div className="input-field">
+                <button className='btn btn-primary btn-lg mt-2' onClick={createHandler}>Save</button>
             </div>
         </>
     )

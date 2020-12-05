@@ -4,8 +4,8 @@ const Initiative = require('../models/Initiative')
 
 const router = Router()
 
-//  /api/initiative
-router.get('/', async (req, res) => {
+//  /api/initiative/initiatives
+router.get('/initiatives', async (req, res) => {
     try {
         const initiatives = await Initiative.find({}).lean()
         res.json(initiatives)

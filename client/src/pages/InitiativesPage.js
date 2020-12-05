@@ -9,7 +9,7 @@ export const InitiativesPage = () => {
 
     const fetchInitiatives = useCallback(async () => {
         try {
-            const fetched = await request('/api/initiative', 'GET', null)
+            const fetched = await request('/api/initiative/initiatives', 'GET', null)
             setInitiatives(fetched)
         } catch (e) {}
     }, [request])
@@ -23,9 +23,6 @@ export const InitiativesPage = () => {
     }
 
     return (
-        <>
-            <h1>Initiatives Page</h1>
-            <InitiativesList initiatives={initiatives}/>
-        </>
+        <InitiativesList initiatives={initiatives}/>
     )
 }

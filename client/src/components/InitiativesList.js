@@ -7,21 +7,24 @@ export const InitiativesList = ({ initiatives }) => {
     }
 
     return (
-        <table>
-            <tbody>
-            { initiatives.map((ini, index) => {
-                return (
-                    <tr key={ini._id}>
-                        <td>{index + 1}</td>
-                        <td>{ini.title}</td>
-                        <td>
-                            <Link to={`/detail/${ini._id}`} className={'btn'}>Open</Link>
-                        </td>
-                    </tr>
-                )
-            }) }
-            </tbody>
-
-        </table>
+        <div className="jumbotron jumbotron-fluid">
+            <div className="container">
+                <h1 className="display-4">Initiatives</h1>
+                <ul className="list-group">
+                    { initiatives.map((ini, index) => {
+                        return (
+                            <li className="list-group-item d-flex justify-content-between" key={ini._id}>
+                        <span>
+                            {index + 1}. {ini.title}
+                        </span>
+                                <span>
+                            <Link to={`/detail/${ini._id}`} className={'btn btn-info'}>Open</Link>
+                        </span>
+                            </li>
+                        )
+                    }) }
+                </ul>
+            </div>
+        </div>
     )
 }

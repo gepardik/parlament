@@ -33,15 +33,7 @@ export const DetailPage = () => {
 
     return (
         <>
-            { initiative && <InitiativeDetails initiative={initiative}/> }
-            <div className="row">
-                <div className="col s1">
-                    <button className='btn green' onClick={voteHandler.bind(null, true)}>Like</button>
-                </div>
-                <div className="col s1">
-                    <button className='btn red' onClick={voteHandler.bind(null, false)}>Dislike</button>
-                </div>
-            </div>
+            { initiative && <InitiativeDetails initiative={initiative} likeHandler={voteHandler.bind(null, true)} dislikeHandler={voteHandler.bind(null, false)}/> }
         </>
     )
 }
