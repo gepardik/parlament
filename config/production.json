@@ -1,5 +1,5 @@
 {
-  "port": 5000,
+  "port": 80,
   "mongoUri": "mongodb+srv://galina:tvlkek123@cluster0.xonqc.mongodb.net/todos",
-  "baseUrl": "http://localhost:5000"
+  "baseUrl": "http://sambala.ee"
 }

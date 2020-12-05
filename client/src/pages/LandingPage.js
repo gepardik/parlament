@@ -15,8 +15,9 @@ export const LandingPage = () => {
                         <div className="title"><h5>North America</h5></div>
                         <div className="row mt-2">
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Canada</a> [<a className="lang" href="#">EN</a>][<a className="lang"
-                                                                                                href="#">FR</a>]
+                                <a href={'/initiatives'}>Canada</a>
+                                [<a className="lang" href={'/initiatives'}>EN</a>]
+                                [<a className="lang" href={'/initiatives'}>FR</a>]
                             </div>
                             <div className="col-sm">
                                 <a href={'/initiatives'}>Mexico</a>
@@ -61,8 +62,9 @@ export const LandingPage = () => {
                         </div>
                         <div className="row mt-2">
                             <div className="col-sm">
-                                <a href={'/initiatives'}>El Salvador</a> [<a className="lang" href="#">EN</a>][<a className="lang"
-                                                                                                     href="#">FR</a>]
+                                <a href={'/initiatives'}>El Salvador</a>
+                                [<a className="lang" href={'/initiatives'}>EN</a>]
+                                [<a className="lang" href={'/initiatives'}>FR</a>]
                             </div>
                             <div className="col-sm">
                                 <a href={'/initiatives'}>Antigua and Barbuda</a>
@@ -85,8 +87,9 @@ export const LandingPage = () => {
                                 <a href={'/initiatives'}>Guadeloupe</a>
                             </div>
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Guatemala</a> [<a className="lang" href="#">EN</a>][<a className="lang"
-                                                                                                   href="#">FR</a>]
+                                <a href={'/initiatives'}>Guatemala</a>
+                                [<a className="lang" href={'/initiatives'}>EN</a>]
+                                [<a className="lang" href={'/initiatives'}>FR</a>]
                             </div>
                         </div>
                         <div className="row mt-2">

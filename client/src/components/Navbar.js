@@ -20,16 +20,16 @@ export const Navbar = () => {
                         <a className="nav-link" href="/home">Home <span className="sr-only">(current)</span></a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">Current</a>
+                        <span className="nav-link">Current</span>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">Future</a>
+                        <span className="nav-link">Future</span>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">Past</a>
+                        <span className="nav-link">Past</span>
                     </li>
                     <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a className="nav-link dropdown-toggle" href="/initiatives" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Initiatives
                         </a>
@@ -42,16 +42,16 @@ export const Navbar = () => {
                         </div>
                     </li>
                     <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <span className="nav-link dropdown-toggle" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Local
-                        </a>
+                        </span>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                             <span className="dropdown-item">Counties of Ireland</span>
                             <div className="dropdown-divider"></div>
-                            <a className="dropdown-item" href="#">Cork</a>
-                            <a className="dropdown-item" href="#">Galway</a>
-                            <a className="dropdown-item" href="#">Mayo</a>
+                            <span className="dropdown-item">Cork</span>
+                            <span className="dropdown-item">Galway</span>
+                            <span className="dropdown-item">Mayo</span>
                         </div>
                     </li>
                 </ul>
