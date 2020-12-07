@@ -3,10 +3,20 @@ const Initiative = require('../models/Initiative')
 const auth = require('../middleware/auth.middleware')
 const router = Router()
 
-//  /api/initiative/my_initiatives
-router.get('/my_initiatives', auth, async (req, res) => {
+//  /api/initiative/my
+router.get('/my', auth, async (req, res) => {
     try {
         const initiatives = await Initiative.find({ author: req.user.userId }).lean()
+        res.json(initiatives)
+    } catch (e) {
+        res.status(500).json({ message: 'Something went wrong. Try again!' })
+    }
+})
+
+//  /api/initiative/top
+router.get('/top', async (req, res) => {
+    try {
+        const initiatives = await Initiative.find({  }).lean()
         res.json(initiatives)
     } catch (e) {
         res.status(500).json({ message: 'Something went wrong. Try again!' })

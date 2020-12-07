@@ -23,10 +23,10 @@ export const useRoutes = isAuthenticated => {
                     <HomePage />
                 </Route>
                 <Route path="/top_initiatives" exact>
-                    <InitiativesPage />
+                    <InitiativesPage type={'top'} />
                 </Route>
                 <Route path="/my_initiatives" exact>
-                    <InitiativesPage />
+                    <InitiativesPage type={'my'} />
                 </Route>
                 <Route path="/create" exact>
                     <CreatePage />
@@ -54,8 +54,8 @@ export const useRoutes = isAuthenticated => {
                 <Slider />
                 <HomePage />
             </Route>
-            <Route path="/initiatives" exact>
-                <InitiativesPage />
+            <Route path="/top_initiatives" exact>
+                <InitiativesPage type={'top'} />
             </Route>
             <Route path="/register" exact>
                 <RegisterPage />
