@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 
 export const InitiativesList = ({ initiatives }) => {
     if (!initiatives.length) {
-        return <p>No initiatives!</p>
+        return <p className="text-center">No initiatives!</p>
     }
 
     return (
@@ -18,7 +18,7 @@ export const InitiativesList = ({ initiatives }) => {
                             {index + 1}. {ini.title}
                         </span>
                                 <span>
-                            <Link to={`/detail/${ini._id}`} className={'btn btn-info'}>Open</Link>
+                            <Link to={`/detail/${ini._id}`} className={'btn btn-info'}>Vote</Link>
                         </span>
                             </li>
                         )

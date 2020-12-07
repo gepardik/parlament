@@ -1,9 +1,9 @@
 import React from 'react'
 
-export const HomePage = () => {
+export const PastPage = () => {
     return (
         <div className='container'>
-            <h2>Home page</h2>
+            <h1>Past laws page</h1>
         </div>
     )
 }

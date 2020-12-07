@@ -15,15 +15,15 @@ export const LandingPage = () => {
                         <div className="title"><h5>North America</h5></div>
                         <div className="row mt-2">
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Canada</a>
-                                [<a className="lang" href={'/initiatives'}>EN</a>]
-                                [<a className="lang" href={'/initiatives'}>FR</a>]
+                                <a href={'/current'}>Canada</a>
+                                [<a className="lang" href={'/current'}>EN</a>]
+                                [<a className="lang" href={'/current'}>FR</a>]
                             </div>
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Mexico</a>
+                                <a href={'/current'}>Mexico</a>
                             </div>
                             <div className="col-sm">
-                                <a href={'/initiatives'}>United States</a>
+                                <a href={'/current'}>United States</a>
                             </div>
                             <div className="col-sm">
 
@@ -34,76 +34,76 @@ export const LandingPage = () => {
                         <div className="title"><h5>Central America</h5></div>
                         <div className="row mt-2">
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Anguila</a>
+                                <a href={'/current'}>Anguila</a>
                             </div>
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Antigua and Barbuda</a>
+                                <a href={'/current'}>Antigua and Barbuda</a>
                             </div>
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Aruba</a>
+                                <a href={'/current'}>Aruba</a>
                             </div>
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Bahamas</a>
-                            </div>
-                        </div>
-                        <div className="row mt-2">
-                            <div className="col-sm">
-                                <a href={'/initiatives'}>Barbados</a>
-                            </div>
-                            <div className="col-sm">
-                                <a href={'/initiatives'}>Belize</a>
-                            </div>
-                            <div className="col-sm">
-                                <a href={'/initiatives'}>Bermuda</a>
-                            </div>
-                            <div className="col-sm">
-                                <a href={'/initiatives'}>British Virgin Islands</a>
+                                <a href={'/current'}>Bahamas</a>
                             </div>
                         </div>
                         <div className="row mt-2">
                             <div className="col-sm">
-                                <a href={'/initiatives'}>El Salvador</a>
-                                [<a className="lang" href={'/initiatives'}>EN</a>]
-                                [<a className="lang" href={'/initiatives'}>FR</a>]
+                                <a href={'/current'}>Barbados</a>
                             </div>
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Antigua and Barbuda</a>
+                                <a href={'/current'}>Belize</a>
                             </div>
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Aruba</a>
+                                <a href={'/current'}>Bermuda</a>
                             </div>
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Bahamas</a>
+                                <a href={'/current'}>British Virgin Islands</a>
                             </div>
                         </div>
                         <div className="row mt-2">
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Cayman Islands</a>
+                                <a href={'/current'}>El Salvador</a>
+                                [<a className="lang" href={'/current'}>EN</a>]
+                                [<a className="lang" href={'/current'}>FR</a>]
                             </div>
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Grenada</a>
+                                <a href={'/current'}>Antigua and Barbuda</a>
                             </div>
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Guadeloupe</a>
+                                <a href={'/current'}>Aruba</a>
                             </div>
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Guatemala</a>
-                                [<a className="lang" href={'/initiatives'}>EN</a>]
-                                [<a className="lang" href={'/initiatives'}>FR</a>]
+                                <a href={'/current'}>Bahamas</a>
                             </div>
                         </div>
                         <div className="row mt-2">
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Anguila</a>
+                                <a href={'/current'}>Cayman Islands</a>
                             </div>
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Antigua and Barbuda</a>
+                                <a href={'/current'}>Grenada</a>
                             </div>
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Aruba</a>
+                                <a href={'/current'}>Guadeloupe</a>
                             </div>
                             <div className="col-sm">
-                                <a href={'/initiatives'}>Bahamas</a>
+                                <a href={'/current'}>Guatemala</a>
+                                [<a className="lang" href={'/current'}>EN</a>]
+                                [<a className="lang" href={'/current'}>FR</a>]
+                            </div>
+                        </div>
+                        <div className="row mt-2">
+                            <div className="col-sm">
+                                <a href={'/current'}>Anguila</a>
+                            </div>
+                            <div className="col-sm">
+                                <a href={'/current'}>Antigua and Barbuda</a>
+                            </div>
+                            <div className="col-sm">
+                                <a href={'/current'}>Aruba</a>
+                            </div>
+                            <div className="col-sm">
+                                <a href={'/current'}>Bahamas</a>
                             </div>
                         </div>
                     </div>

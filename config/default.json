@@ -1,5 +1,6 @@
 {
   "port": 5000,
+  "jwtSecret": "galina parlament mern",
   "mongoUri": "mongodb+srv://galina:tvlkek123@cluster0.xonqc.mongodb.net/todos",
   "baseUrl": "http://localhost:5000"
 }

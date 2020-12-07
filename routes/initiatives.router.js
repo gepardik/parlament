@@ -1,13 +1,12 @@
 const { Router } = require('express')
-const config = require('config')
 const Initiative = require('../models/Initiative')
-
+const auth = require('../middleware/auth.middleware')
 const router = Router()
 
-//  /api/initiative/initiatives
-router.get('/initiatives', async (req, res) => {
+//  /api/initiative/my_initiatives
+router.get('/my_initiatives', auth, async (req, res) => {
     try {
-        const initiatives = await Initiative.find({}).lean()
+        const initiatives = await Initiative.find({ author: req.user.userId }).lean()
         res.json(initiatives)
     } catch (e) {
         res.status(500).json({ message: 'Something went wrong. Try again!' })
@@ -15,11 +14,12 @@ router.get('/initiatives', async (req, res) => {
 })
 
 // /api/initiative/create    POST
-router.post('/create', async (req, res) => {
+router.post('/create', auth, async (req, res) => {
     try {
         const initiative = new Initiative({
             title: req.body.title,
-            content: req.body.content
+            content: req.body.content,
+            author: req.user.userId
         })
 
         await initiative.save()
@@ -39,10 +39,14 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-//   /api/initiative/vote/:id
-router.put('/vote/:id', async (req, res) => {
+//   /api/initiative/vote
+router.post('/vote', async (req, res) => {
     try {
-        await Initiative.findOneAndUpdate({ _id: req.params.id }, { counter: req.body.score }, {new: true})
+        const initiative = await Initiative.findOne({ _id: req.body.id })
+        initiative.score = req.body.score
+
+        await initiative.save()
+        res.status(201).json({ initiative })
 
     } catch (e) {
         res.status(500).json({ message: 'Something went wrong. Try again!' })

@@ -1,5 +1,6 @@
 {
   "port": 80,
+  "jwtSecret": "galina parlament mern",
   "mongoUri": "mongodb+srv://galina:tvlkek123@cluster0.xonqc.mongodb.net/todos",
   "baseUrl": "http://sambala.ee"
 }

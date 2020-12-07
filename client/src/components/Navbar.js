@@ -1,12 +1,24 @@
-import React from 'react'
-import logo from '../img/logo.png'
+import React, {useContext} from 'react'
+import {NavLink, useHistory} from 'react-router-dom'
+import {AuthContext} from "../context/AuthContext"
+import logo from '../img/logo.svg'
+import homeIcon from '../icons/home.svg'
+import userIcon from '../icons/user.svg'
 
 export const Navbar = () => {
-    return (
+    const history = useHistory()
+    const auth = useContext(AuthContext)
 
+    const logoutHandler = event => {
+        event.preventDefault()
+        auth.logout()
+        history.push('/home')
+    }
+
+    return (
         <nav className="navbar navbar-expand-lg navbar-light bg-white">
             <a className="navbar-brand" href="/">
-                <img src={logo} alt="" />
+                <img src={logo} alt="" height="85rem"/>
             </a>
             <button className="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -14,34 +26,41 @@ export const Navbar = () => {
                 <span className="navbar-toggler-icon"></span>
             </button>
 
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav mr-auto">
-                    <li className="nav-item active">
-                        <a className="nav-link" href="/home">Home <span className="sr-only">(current)</span></a>
+            <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul className="navbar-nav mr-6">
+                    <li className="nav-item mr-4">
+                        <NavLink className="nav-link pl-4 with-icon" to="/home" style={{background: `url("${homeIcon}")`}}>
+                            Home
+                        </NavLink>
                     </li>
-                    <li className="nav-item">
-                        <span className="nav-link">Current</span>
+                    <li className="nav-item mr-4">
+                        <NavLink to='/current' className="nav-link">Current</NavLink>
                     </li>
-                    <li className="nav-item">
-                        <span className="nav-link">Future</span>
+                    <li className="nav-item mr-4">
+                        <NavLink to='/past' className="nav-link">Past</NavLink>
                     </li>
-                    <li className="nav-item">
-                        <span className="nav-link">Past</span>
-                    </li>
-                    <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" href="/initiatives" id="navbarDropdown" role="button"
+                    <li className="nav-item dropdown mr-4">
+                        <span className="nav-link dropdown-toggle" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Initiatives
-                        </a>
+                        </span>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a className="dropdown-item" href="/initiatives">Top Initiative</a>
+                            <NavLink className="dropdown-item" to="/top_initiatives">Top Initiative</NavLink>
                             <div className="dropdown-divider"></div>
-                            <a className="dropdown-item" href="/initiatives">My Initiative</a>
-                            <div className="dropdown-divider"></div>
-                            <a className="dropdown-item" href="/create">Create Initiative</a>
+                            {
+                                auth.isAuthenticated
+                                ?
+                                    <>
+                                        <NavLink className="dropdown-item" to="/my_initiatives">My Initiative</NavLink>
+                                        <div className="dropdown-divider"></div>
+                                        <NavLink className="dropdown-item" to="/create">Create Initiative</NavLink>
+                                    </>
+                                : ''
+                            }
+
                         </div>
                     </li>
-                    <li className="nav-item dropdown">
+                    <li className="nav-item dropdown mr-4">
                         <span className="nav-link dropdown-toggle" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Local
@@ -52,6 +71,35 @@ export const Navbar = () => {
                             <span className="dropdown-item">Cork</span>
                             <span className="dropdown-item">Galway</span>
                             <span className="dropdown-item">Mayo</span>
+                        </div>
+                    </li>
+                    <li className="nav-item dropdown mr-4">
+                        <span className="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src={userIcon} alt=""/>
+                            { auth.userName ? <span className="ml-2 text-success">{ auth.userName }</span> : ''}
+
+                        </span>
+
+                        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {
+                                !(auth.token)
+                                ?
+                                    <>
+                                        <a className="dropdown-item" href="/register">Register</a>
+                                        <a className="dropdown-item" href="/login">Login</a>
+                                    </>
+                                :
+                                <a
+                                    className={'dropdown-item'}
+                                    href="/"
+                                    onClick={logoutHandler}
+                                >
+                                    Log out
+                                </a>
+                            }
+
+
                         </div>
                     </li>
                 </ul>

@@ -1,19 +1,12 @@
 import React from 'react'
 
 export const Loader = () => (
-    <div style={{display: 'flex', justifyContent: 'center', paddingTop: '3rem'}}>
-        <div className="preloader-wrapper active">
-            <div className="spinner-layer spinner-red-only">
-                <div className="circle-clipper left">
-                    <div className="circle" />
-                </div>
-                <div className="gap-patch">
-                    <div className="circle" />
-                </div>
-                <div className="circle-clipper right">
-                    <div className="circle" />
-                </div>
+    <div className="container">
+        <div className="d-flex justify-content-center mt-4">
+            <div className="spinner-border" role="status">
+                <span className="visually-hidden"></span>
             </div>
         </div>
     </div>
+
 )
