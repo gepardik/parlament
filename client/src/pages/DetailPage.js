@@ -4,12 +4,14 @@ import {InitiativeDetails} from '../components/InitiativeDetails'
 import {useHttp} from '../hooks/http.hook'
 import {Loader} from "../components/Loader"
 import {AuthContext} from "../context/AuthContext"
+import {useMessage} from "../hooks/message.hook"
 
 export const DetailPage = () => {
-    const {token} = useContext(AuthContext)
-    const {request, loading} = useHttp()
+    const {token, userId} = useContext(AuthContext)
+    const {request, loading, error, clearError} = useHttp()
     const [initiative, setInitiative] = useState(null)
     const initiativeId = useParams().id
+    const  message = useMessage()
 
     const getInitiative = useCallback(async () => {
         try {
@@ -24,22 +26,32 @@ export const DetailPage = () => {
         getInitiative()
     }, [getInitiative])
 
+    useEffect(() => {
+        message(error)
+        clearError()
+    }, [error, message, clearError])
+
     if (loading) {
         return <Loader />
     }
 
     const voteHandler = async (option) => {
-        const newScore = option ? initiative.score + 1 : initiative.score - 1
-        setInitiative({...initiative, score: newScore})
+        try {
+            let newScore = initiative.score
+            option > 0 ? newScore++  : newScore--
 
-        await request(`/api/initiative/vote`, 'POST', {id: initiativeId, score: newScore}, {
-            Authorization: `Bearer ${token}`
-        } )
+            await request(`/api/initiative/vote`, 'POST', {_id: initiative._id, score: newScore, author: initiative.author, new_vote: userId}, {
+                Authorization: `Bearer ${token}`
+            } )
+
+            getInitiative()
+
+        } catch (e) {}
     }
 
     return (
         <div className='container'>
-            { !loading && initiative && <InitiativeDetails initiative={initiative} likeHandler={voteHandler.bind(null, true)} dislikeHandler={voteHandler.bind(null, false)}/> }
+            { !loading && initiative && <InitiativeDetails initiative={initiative} likeHandler={voteHandler.bind(null, 1)} dislikeHandler={voteHandler.bind(null, -1)}/> }
         </div>
     )
 }

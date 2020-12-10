@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react'
 import {useHttp} from "../hooks/http.hook"
 import {useMessage} from "../hooks/message.hook"
-import {AuthContext} from "../context/AuthContext";
+import {AuthContext} from "../context/AuthContext"
 
 export const LoginPage = () => {
     const auth = useContext(AuthContext)
@@ -28,6 +28,12 @@ export const LoginPage = () => {
         } catch (e) {}
     }
 
+    const pressHandler = async event => {
+        if (event.key === 'Enter') {
+            await loginHandler()
+        }
+    }
+
     return (
         <div className='container'>
             <h2 className={'text-center mt-4'}>Log In</h2>
@@ -44,6 +50,7 @@ export const LoginPage = () => {
                                 name="username"
                                 value={form.username}
                                 onChange={changeHandler}
+                                onKeyPress={pressHandler}
                             />
                         </div>
                         <div className="form-group">
@@ -55,6 +62,7 @@ export const LoginPage = () => {
                                 name="password"
                                 value={form.password}
                                 onChange={changeHandler}
+                                onKeyPress={pressHandler}
                             />
                         </div>
                         <button

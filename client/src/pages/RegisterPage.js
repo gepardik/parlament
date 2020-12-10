@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import {useHttp} from "../hooks/http.hook"
 import {useMessage} from "../hooks/message.hook"
+import {useHistory} from 'react-router-dom'
 
 export const RegisterPage = () => {
+    const history = useHistory()
     const message = useMessage()
     const {loading, request, error, clearError} = useHttp()
     const [form, setForm] = useState({
@@ -14,10 +16,6 @@ export const RegisterPage = () => {
         clearError()
     }, [error, message, clearError])
 
-    // useEffect(() => {
-    //     window.M.updateTextFields()
-    // }, [])
-
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value })
     }
@@ -26,6 +24,7 @@ export const RegisterPage = () => {
         try {
             const data = await request('/api/auth/register', 'POST', {...form})
             message(data.message)
+            history.push('/login')
         } catch (e) {}
     }
 

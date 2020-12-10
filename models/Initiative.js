@@ -21,7 +21,12 @@ const schema = new Schema({
         type: Types.ObjectId,
         ref: 'User',
         default: null
-    }
+    },
+    voted_by:
+        [{
+            type: Types.ObjectId,
+            ref: 'User'
+        }]
 })
 
 module.exports = model('Initiative', schema)

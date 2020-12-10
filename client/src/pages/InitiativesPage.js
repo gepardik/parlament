@@ -8,7 +8,9 @@ export const InitiativesPage = props => {
     const {token} = useContext(AuthContext)
     const [initiatives, setInitiatives] = useState([])
     const {request, loading} = useHttp()
-
+    const pageTitle = (props.type === 'my')
+                    ? 'My Initiative'
+                    : 'Top Initiative'
 
     const fetchInitiatives = useCallback(async () => {
         const headers = (props.type === 'my')
@@ -30,7 +32,7 @@ export const InitiativesPage = props => {
 
     return (
         <div className='container'>
-            { !loading && <InitiativesList initiatives={initiatives}/> }
+            { !loading && <InitiativesList initiatives={initiatives} pageTitle={pageTitle}/> }
         </div>
     )
 }
