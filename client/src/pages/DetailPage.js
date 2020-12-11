@@ -12,6 +12,7 @@ export const DetailPage = () => {
     const [initiative, setInitiative] = useState(null)
     const initiativeId = useParams().id
     const  message = useMessage()
+    const authorized = !!token
 
     const getInitiative = useCallback(async () => {
         try {
@@ -51,7 +52,7 @@ export const DetailPage = () => {
 
     return (
         <div className='container'>
-            { !loading && initiative && <InitiativeDetails initiative={initiative} likeHandler={voteHandler.bind(null, 1)} dislikeHandler={voteHandler.bind(null, -1)}/> }
+            { !loading && initiative && <InitiativeDetails initiative={initiative} likeHandler={voteHandler.bind(null, 1)} dislikeHandler={voteHandler.bind(null, -1)} authorized={authorized} /> }
         </div>
     )
 }

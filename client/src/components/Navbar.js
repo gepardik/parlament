@@ -8,7 +8,6 @@ import userIcon from '../icons/user.svg'
 export const Navbar = () => {
     const history = useHistory()
     const auth = useContext(AuthContext)
-
     const logoutHandler = event => {
         event.preventDefault()
         auth.logout()
@@ -90,13 +89,24 @@ export const Navbar = () => {
                                         <a className="dropdown-item" href="/login">Login</a>
                                     </>
                                 :
-                                <a
-                                    className={'dropdown-item'}
-                                    href="/"
-                                    onClick={logoutHandler}
-                                >
-                                    Log out
-                                </a>
+                                    auth.role === 'admin'
+                                        ?
+                                        <NavLink
+
+                                            className={'dropdown-item'}
+                                            to="/admin"
+                                        >
+                                            Admin
+                                        </NavLink>
+
+                                        :
+                                            <a
+                                                className={'dropdown-item'}
+                                                href="/"
+                                                onClick={logoutHandler}
+                                            >
+                                                Log out
+                                            </a>
                             }
 
 

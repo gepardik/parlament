@@ -10,6 +10,7 @@ import {LoginPage} from "./pages/LoginPage"
 import {PastPage} from "./pages/PastPage";
 import {CurrentPage} from "./pages/CurrentPage";
 import {Slider} from "./components/Slider";
+import {AdminPage} from "./pages/AdminPage";
 
 export const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
@@ -36,6 +37,9 @@ export const useRoutes = isAuthenticated => {
                 </Route>
                 <Route path="/past">
                     <PastPage />
+                </Route>
+                <Route path="/admin">
+                    <AdminPage />
                 </Route>
                 <Route path='/current'>
                     <CurrentPage />
