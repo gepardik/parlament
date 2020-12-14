@@ -1,9 +1,10 @@
 import React from 'react'
+import {InitiativesPage} from "./InitiativesPage";
 
 export const HomePage = () => {
     return (
         <div className='container'>
-            <h2>Home page</h2>
+            <InitiativesPage type={'top'} />
         </div>
     )
 }

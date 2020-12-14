@@ -5,11 +5,11 @@ import {Navbar} from './components/Navbar'
 import {Empty} from './components/Empty'
 import {useAuth} from './hooks/auth.hook'
 import {AuthContext} from "./context/AuthContext"
+import {Loader} from "./components/Loader"
 import 'materialize-css'
-import {Loader} from "./components/Loader";
 
 function App() {
-    const {token, userId, userName, role, login, logout, ready} = useAuth()
+    const {token, userId, userName, userCountry, role, login, logout, ready} = useAuth()
     const isAuthenticated = !!token
     const routes = useRoutes(isAuthenticated)
 
@@ -19,7 +19,7 @@ function App() {
 
     return (
         <AuthContext.Provider value={{
-            token, login, logout, userId, userName, role, isAuthenticated
+            token, login, logout, userId, userName, userCountry, role, isAuthenticated
         }}>
             <Router>
                 {window.location.pathname === '/' ? <Empty /> : <Navbar />}

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {useHttp} from "../hooks/http.hook"
 import {useMessage} from "../hooks/message.hook"
 import {useHistory} from 'react-router-dom'
+import {CountryDropdown, RegionDropdown} from 'react-country-region-selector'
 
 export const RegisterPage = () => {
     const history = useHistory()
@@ -18,6 +19,12 @@ export const RegisterPage = () => {
 
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value })
+    }
+
+    const changeCountryLocalHandler = (type = 'country', event) => {
+        const name = type === 'country' ? 'country' : 'local'
+
+        setForm({ ...form, [name]: event })
     }
 
     const registerHandler = async () => {
@@ -75,6 +82,33 @@ export const RegisterPage = () => {
                                     onChange={changeHandler}
                                 />
                             </div>
+                            <div className="form-group">
+                                <label htmlFor="country">Country</label>
+                                <CountryDropdown
+                                    className="form-control"
+                                    id="country"
+                                    name="country"
+                                    valueType="short"
+                                    value={form.country}
+                                    onChange={changeCountryLocalHandler.bind(null, 'country')}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="local">Local</label>
+                                <RegionDropdown
+                                    defaultOptionLabel="Select Local"
+                                    country={form.country}
+                                    className="form-control"
+                                    id="local"
+                                    name="local"
+                                    countryValueType="short"
+                                    valueType="short"
+                                    value={form.local}
+                                    onChange={changeCountryLocalHandler.bind(null, 'local')}
+                                />
+                            </div>
+
                             <div className="form-group">
                                 <label htmlFor="password">Password</label>
                                 <input

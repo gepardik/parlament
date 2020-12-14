@@ -8,7 +8,7 @@ export const InitiativeDetails = ({ initiative, likeHandler, dislikeHandler, aut
             <h1 className="display-4">{initiative.title}</h1>
             <small className="text-info">Created: {new Date(initiative.created).toLocaleDateString()}</small>
             <br/>
-            <small className="text-info">Score: {initiative.score}</small>
+            {/*<small className="text-info">Score: {initiative.score}</small>*/}
             <p className="lead">{initiative.content}</p>
             <hr className="my-4" />
             {authorized ?

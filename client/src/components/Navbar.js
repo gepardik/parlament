@@ -89,17 +89,15 @@ export const Navbar = () => {
                                         <a className="dropdown-item" href="/login">Login</a>
                                     </>
                                 :
-                                    auth.role === 'admin'
-                                        ?
-                                        <NavLink
+                                    <>
+                                        {auth.role === 'admin' && <NavLink
 
                                             className={'dropdown-item'}
                                             to="/admin"
                                         >
                                             Admin
-                                        </NavLink>
+                                        </NavLink>}
 
-                                        :
                                             <a
                                                 className={'dropdown-item'}
                                                 href="/"
@@ -107,6 +105,7 @@ export const Navbar = () => {
                                             >
                                                 Log out
                                             </a>
+                                    </>
                             }
 
 

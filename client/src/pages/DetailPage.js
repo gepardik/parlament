@@ -5,6 +5,10 @@ import {useHttp} from '../hooks/http.hook'
 import {Loader} from "../components/Loader"
 import {AuthContext} from "../context/AuthContext"
 import {useMessage} from "../hooks/message.hook"
+import {FacebookShareButton} from 'react-share'
+import FacebookIcon from "react-share/es/FacebookIcon"
+import TwitterShareButton from "react-share/es/TwitterShareButton"
+import TwitterIcon from "react-share/es/TwitterIcon"
 
 export const DetailPage = () => {
     const {token, userId} = useContext(AuthContext)
@@ -13,6 +17,11 @@ export const DetailPage = () => {
     const initiativeId = useParams().id
     const  message = useMessage()
     const authorized = !!token
+
+    const url = "http://sambala.ee/detail/5fcd225e0455b323a075afd0" //String(window.location)
+    let title = `Vote for the Initiative!`
+    const size = "2.5rem"
+
 
     const getInitiative = useCallback(async () => {
         try {
@@ -38,21 +47,62 @@ export const DetailPage = () => {
 
     const voteHandler = async (option) => {
         try {
-            let newScore = initiative.score
-            option > 0 ? newScore++  : newScore--
 
-            await request(`/api/initiative/vote`, 'POST', {_id: initiative._id, score: newScore, author: initiative.author, new_vote: userId}, {
+            const data = await request(`/api/initiative/vote`, 'POST', {_id: initiative._id, vote: option, author: initiative.author, voter: userId}, {
                 Authorization: `Bearer ${token}`
             } )
-
             getInitiative()
-
+            message(data.message)
         } catch (e) {}
     }
 
     return (
         <div className='container'>
             { !loading && initiative && <InitiativeDetails initiative={initiative} likeHandler={voteHandler.bind(null, 1)} dislikeHandler={voteHandler.bind(null, -1)} authorized={authorized} /> }
+                <div className='d-flex justify-content-start'>
+                    <FacebookShareButton
+                        className='btn btn-lg m-2 d-flex align-items-center'
+                        style={{
+                            background: '#3b5998',
+                            padding: '.5rem 1rem',
+                            fontSize: '1.25rem',
+                            lineHeight: '1.5',
+                            borderRadius: '.3rem',
+                            color: '#fff'
+                        }}
+                        quote = {title}
+                        url = {url}
+                    >
+                        <FacebookIcon
+                            size = {size}
+                        />
+                        <span>
+                            Share on Facebook
+                        </span>
+                    </FacebookShareButton>
+
+                    <TwitterShareButton
+                        className='btn btn-lg m-2 d-flex align-items-center'
+                        style={{
+                            background: '#00aced',
+                            padding: '.5rem 1rem',
+                            fontSize: '1.25rem',
+                            lineHeight: '1.5',
+                            borderRadius: '.3rem',
+                            color: '#fff'
+                        }}
+                        title = {title}
+                        url = {url}
+                    >
+                        <TwitterIcon
+                            size={size}
+                        />
+                        <span>
+                            Share on Twitter
+                        </span>
+                    </TwitterShareButton>
+                </div>
+
         </div>
     )
 }

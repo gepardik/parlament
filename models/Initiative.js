@@ -9,10 +9,6 @@ const schema = new Schema({
         type: String,
         default: true
     },
-    score: {
-        type: Number,
-        default: 0
-    },
     created: {
         type: Date,
         default: Date.now
@@ -22,11 +18,20 @@ const schema = new Schema({
         ref: 'User',
         default: null
     },
-    voted_by:
+    vote_for:
         [{
             type: Types.ObjectId,
             ref: 'User'
-        }]
+        }],
+    vote_against:
+        [{
+            type: Types.ObjectId,
+            ref: 'User'
+        }],
+    country: {
+        type: String,
+        required: true
+    }
 })
 
 module.exports = model('Initiative', schema)

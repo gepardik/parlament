@@ -18,7 +18,7 @@ export const CreatePage = () => {
 
     const createHandler = async () => {
         try {
-            const data = await request('/api/initiative/create', 'POST', initiative, {
+            const data = await request('/api/initiative/create', 'POST', {...initiative, country: auth.userCountry}, {
                 Authorization: `Bearer ${auth.token}`
             } )
             history.push(`/detail/${data.initiative._id}`)

@@ -15,7 +15,9 @@ router.post(
         check('last_name', 'Enter Last Name').exists(),
         check('email', 'Incorrect e-mail address').normalizeEmail().isEmail(),
         check('password', 'Minimum password length 6 symbols')
-            .isLength({ min:6 })
+            .isLength({ min:6 }),
+        check('country', 'Country field must not be empty!').exists(),
+        check('local', 'Local field must not be empty!').exists()
 
     ],
     async (req, res) => {
@@ -29,7 +31,7 @@ router.post(
                 })
             }
 
-            const {username, first_name, last_name, email, password} = req.body
+            const {username, first_name, last_name, email, password, country, local} = req.body
 
             const candidate = await User.findOne({ username })
 
@@ -44,6 +46,8 @@ router.post(
                 first_name,
                 last_name,
                 email,
+                country,
+                local,
                 password:hashedPassword
             })
 
@@ -95,7 +99,7 @@ router.post(
                 { expiresIn: '1h' }
             )
 
-            res.json({ token, userId: user.id, userName: user.username, role: user.role })
+            res.json({ token, userId: user.id, userName: user.username, role: user.role, userCountry: user.country })
 
         } catch (e) {
             res.status(500).json({message: 'Something went wrong! Try again!'})

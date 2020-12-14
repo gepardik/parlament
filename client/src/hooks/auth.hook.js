@@ -8,14 +8,16 @@ export const useAuth = () => {
     const [userId, setUserId] = useState(null)
     const [userName, setUserName] = useState(null)
     const [role, setRole] = useState(null)
+    const [userCountry, setUserCountry] = useState(null)
 
-    const login = useCallback((jwtToken, id, username, role) => {
+    const login = useCallback((jwtToken, id, username, role, country) => {
         setToken(jwtToken)
         setUserId(id)
         setUserName(username)
         setRole(role)
+        setUserCountry(country)
         localStorage.setItem(storageName, JSON.stringify({
-            userId: id, token: jwtToken, userName: username, role
+            userId: id, token: jwtToken, userName: username, role, userCountry: country
         }))
     }, [])
 
@@ -24,6 +26,7 @@ export const useAuth = () => {
         setUserId(null)
         setUserName(null)
         setRole(null)
+        setUserCountry(null)
         localStorage.removeItem(storageName)
     }, [])
 
@@ -31,10 +34,10 @@ export const useAuth = () => {
         const data = JSON.parse(localStorage.getItem(storageName))
 
         if (data && data.token) {
-            login(data.token, data.userId, data.userName, data.role)
+            login(data.token, data.userId, data.userName, data.role, data.userCountry)
         }
         setReady(true)
     }, [login])
 
-    return { login, logout, token, userId, userName, role, ready }
+    return { login, logout, token, userId, userName, role, userCountry, ready }
 }
