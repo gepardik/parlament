@@ -1,6 +1,6 @@
 import React from 'react'
-import CountryRegionSelector from "../components/CounryRegionSelector"
 import AdminCountryPage from "./AdminCountryPage"
+import {AdminLawsPage} from "./AdminLawsPage";
 
 export const AdminPage = () => {
     return (
@@ -29,8 +29,8 @@ export const AdminPage = () => {
                 </div>
 
                 {/* Laws */}
-                <div className="tab-pane fade" id="nav-laws" role="tabpanel" aria-labelledby="nav-laws-tab">Laws
-                    <CountryRegionSelector />
+                <div className="tab-pane fade" id="nav-laws" role="tabpanel" aria-labelledby="nav-laws-tab">
+                    <AdminLawsPage />
                 </div>
                 <div className="tab-pane fade" id="nav-slider" role="tabpanel" aria-labelledby="nav-slider-tab">Slider
                 </div>

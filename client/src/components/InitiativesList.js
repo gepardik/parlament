@@ -5,7 +5,7 @@ export const InitiativesList = ({ initiatives, pageTitle }) => {
     if (!initiatives.length) {
         return <p className="text-center">No initiatives!</p>
     }
-    console.log(initiatives)
+
     return (
         <div className="jumbotron jumbotron-fluid bg-light">
             <div className="container">

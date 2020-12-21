@@ -25,10 +25,13 @@ class CountryRegionSelector extends Component {
             <div>
                 <CountryDropdown
                     value = {country}
+                    valueType = 'short'
                     onChange = {(val) => this.selectCountry(val)} />
                 <RegionDropdown
                     country = {country}
                     value = {region}
+                    countryValueType = "short"
+                    valueType = 'short'
                     onChange = {(val) => this.selectRegion(val)} />
             </div>
         )

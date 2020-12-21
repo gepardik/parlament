@@ -11,6 +11,8 @@ import {PastPage} from "./pages/PastPage";
 import {CurrentPage} from "./pages/CurrentPage";
 import {Slider} from "./components/Slider";
 import {AdminPage} from "./pages/AdminPage";
+import {LawsPage} from "./pages/LawsPage";
+import {LawDetailPage} from "./pages/LawDetailPage";
 
 export const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
@@ -35,14 +37,17 @@ export const useRoutes = isAuthenticated => {
                 <Route path="/detail/:id">
                     <DetailPage />
                 </Route>
+                <Route path="/law/detail/:id">
+                    <LawDetailPage />
+                </Route>
                 <Route path="/past">
-                    <PastPage />
+                    <LawsPage type={'past'} />
                 </Route>
                 <Route path="/admin">
                     <AdminPage />
                 </Route>
                 <Route path='/current'>
-                    <CurrentPage />
+                    <LawsPage type={'current'} />
                 </Route>
                 <Redirect to="/current" />
             </Switch>
