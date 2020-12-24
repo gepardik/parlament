@@ -7,12 +7,11 @@ import {LandingPage} from "./pages/LandingPage"
 import {HomePage} from "./pages/HomePage"
 import {RegisterPage} from "./pages/RegisterPage"
 import {LoginPage} from "./pages/LoginPage"
-import {PastPage} from "./pages/PastPage";
-import {CurrentPage} from "./pages/CurrentPage";
-import {Slider} from "./components/Slider";
-import {AdminPage} from "./pages/AdminPage";
-import {LawsPage} from "./pages/LawsPage";
-import {LawDetailPage} from "./pages/LawDetailPage";
+import {Slider} from "./components/Slider"
+import {AdminPage} from "./pages/AdminPage"
+import {LawsPage} from "./pages/LawsPage"
+import {LawDetailPage} from "./pages/LawDetailPage"
+import {CountryLocalContextConsumer} from "./context/CountryLocalContext"
 
 export const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
@@ -26,7 +25,12 @@ export const useRoutes = isAuthenticated => {
                     <HomePage />
                 </Route>
                 <Route path="/top_initiatives" exact>
-                    <InitiativesPage type={'top'} />
+                    <CountryLocalContextConsumer>
+                        {context => (
+                            <InitiativesPage type={'top'} context={context} />
+                        )}
+                    </CountryLocalContextConsumer>
+
                 </Route>
                 <Route path="/my_initiatives" exact>
                     <InitiativesPage type={'my'} />
@@ -41,13 +45,21 @@ export const useRoutes = isAuthenticated => {
                     <LawDetailPage />
                 </Route>
                 <Route path="/past">
-                    <LawsPage type={'past'} />
+                    <CountryLocalContextConsumer>
+                        {context => (
+                            <LawsPage type={'past'} context={context} />
+                        )}
+                    </CountryLocalContextConsumer>
                 </Route>
                 <Route path="/admin">
                     <AdminPage />
                 </Route>
                 <Route path='/current'>
-                    <LawsPage type={'current'} />
+                    <CountryLocalContextConsumer>
+                        {context => (
+                            <LawsPage type={'current'} context={context} />
+                        )}
+                    </CountryLocalContextConsumer>
                 </Route>
                 <Redirect to="/current" />
             </Switch>
@@ -64,7 +76,11 @@ export const useRoutes = isAuthenticated => {
                 <HomePage />
             </Route>
             <Route path="/top_initiatives" exact>
-                <InitiativesPage type={'top'} />
+                <CountryLocalContextConsumer>
+                    {context => (
+                        <InitiativesPage type={'top'} context={context} />
+                    )}
+                </CountryLocalContextConsumer>
             </Route>
             <Route path="/register" exact>
                 <RegisterPage />
@@ -73,10 +89,18 @@ export const useRoutes = isAuthenticated => {
                 <LoginPage />
             </Route>
             <Route path="/past">
-                <PastPage />
+                <CountryLocalContextConsumer>
+                    {context => (
+                        <LawsPage type={'past'} context={context} />
+                    )}
+                </CountryLocalContextConsumer>
             </Route>
             <Route path='/current'>
-                <CurrentPage />
+                <CountryLocalContextConsumer>
+                    {context => (
+                        <LawsPage type={'current'} context={context} />
+                    )}
+                </CountryLocalContextConsumer>
             </Route>
             <Route path="/detail/:id" exact>
                 <DetailPage />

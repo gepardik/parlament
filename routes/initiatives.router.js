@@ -14,7 +14,7 @@ router.get('/my', auth, async (req, res) => {
 })
 
 //  /api/initiative/top
-router.get('/top', async (req, res) => {
+router.get('/top/:country', async (req, res) => {
     try {
         const pipeline = [
             {
@@ -32,6 +32,10 @@ router.get('/top', async (req, res) => {
                             }
                         ]
                     }
+                }
+            }, {
+                '$match': {
+                    'country': req.params.country
                 }
             }, {
                 '$sort': {

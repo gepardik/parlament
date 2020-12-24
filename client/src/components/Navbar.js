@@ -4,10 +4,13 @@ import {AuthContext} from "../context/AuthContext"
 import logo from '../img/logo.svg'
 import homeIcon from '../icons/home.svg'
 import userIcon from '../icons/user.svg'
+import {CountryLocalContextConsumer} from "../context/CountryLocalContext"
+import {SelectedCountryLocal} from "./SelectedCountryLocal"
 
 export const Navbar = () => {
     const history = useHistory()
     const auth = useContext(AuthContext)
+
     const logoutHandler = event => {
         event.preventDefault()
         auth.logout()
@@ -54,7 +57,11 @@ export const Navbar = () => {
                                         <div className="dropdown-divider"></div>
                                         <NavLink className="dropdown-item" to="/create">Create Initiative</NavLink>
                                     </>
-                                : ''
+                                :   <>
+                                        <a className="dropdown-item" href="/login">My Initiative</a>
+                                        <div className="dropdown-divider"></div>
+                                        <a className="dropdown-item" href="/login">Create Initiative</a>
+                                    </>
                             }
 
                         </div>
@@ -65,17 +72,19 @@ export const Navbar = () => {
                             Local
                         </span>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <span className="dropdown-item">Counties of Ireland</span>
-                            <div className="dropdown-divider"></div>
-                            <span className="dropdown-item">Cork</span>
-                            <span className="dropdown-item">Galway</span>
-                            <span className="dropdown-item">Mayo</span>
+                            <CountryLocalContextConsumer>
+                                {context => (
+                                    <React.Fragment>
+                                        <SelectedCountryLocal context={context} />
+                                    </React.Fragment>
+                                )}
+                            </CountryLocalContextConsumer>
                         </div>
                     </li>
                     <li className="nav-item dropdown mr-4">
                         <span className="nav-link dropdown-toggle" id="navbarDropdown" role="button"
                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src={userIcon} alt=""/>
+                            <img src={userIcon} alt="" />
                             { auth.userName ? <span className="ml-2 text-success">{ auth.userName }</span> : ''}
 
                         </span>
@@ -107,8 +116,6 @@ export const Navbar = () => {
                                             </a>
                                     </>
                             }
-
-
                         </div>
                     </li>
                 </ul>

@@ -1,11 +1,11 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import continents from 'react-continent-country-select/dist/continent_countries.json'
 import {useHttp} from '../hooks/http.hook'
+import {CountryLocalContextConsumer} from '../context/CountryLocalContext'
 
 export const LandingPage = () => {
     const {request} = useHttp()
     const [countries, setCountries] = useState([])
-
     const fetchCountries = useCallback(async () => {
         try {
             const fetched = await request(`/api/countries`, 'GET')
@@ -17,37 +17,12 @@ export const LandingPage = () => {
         fetchCountries()
     }, [fetchCountries])
 
-    const makeHtmlCountries = useCallback(() => {
-        const html = continents.map(continent => {
-            const reducedCountries = continent.countries.filter(country => countries.includes(country.code))
+    const linkClickHandler = async (context, country, event) => {
+        event.preventDefault()
+        context.selectCountry(country)
 
-            if (reducedCountries.length === 0) {
-                return null
-            }
-
-            const countriesHtml = reducedCountries.map((country, index, countriesArr) => {
-                const countryName = country.name.split(',')[0]
-                const rowStart = index % 4 === 0 ? '<div class="row mt-2">' : ''
-                const rowEnd = (((index + 1) % 4 === 0) || ((index + 1) === countriesArr.length)) ? '</div>' : ''
-                return (
-                    rowStart + `<div class="col-sm">
-                        <a href="/current/${country.code.toLowerCase()}">${countryName}</a>
-                    </div>` + rowEnd
-                )
-            }).join('')
-
-
-            return `<div class="container mb-4">
-                        <div class="title">
-                            <h5>${continent.name}</h5>
-                        </div>
-                        ${countriesHtml}
-                    </div>`
-        }).join('')
-
-        return html
-    }, [countries])
-
+        window.location.replace('/current')
+    }
 
     return (
         <>
@@ -58,7 +33,30 @@ export const LandingPage = () => {
 
                 <div className="banner-block"></div>
 
-                <div className="countries-block" dangerouslySetInnerHTML={{ __html: makeHtmlCountries() }}>
+                <div className="countries-block">
+                    {
+                        continents.map((continent, index) => {
+                            const reducedCountries = continent.countries.filter(country => countries.includes(country.code))
+                            return <div className="container mb-4" key={index}>
+                                <div className="title">
+                                    <h5>{continent.name}</h5>
+                                </div>
+                                <div className="row mt-2">
+                                    {reducedCountries.map((country, index2) => {
+                                        return <div className="col-sm" key={index2}>
+                                            <CountryLocalContextConsumer>
+                                                {context => (
+                                                    <a href={'/current'} onClick={linkClickHandler.bind(null, context, country.code)}>
+                                                        {country.name.split(',')[0]}
+                                                    </a>
+                                                )}
+                                            </CountryLocalContextConsumer>
+                                        </div>
+                                    })}
+                                </div>
+                            </div>
+                        })
+                    }
                 </div>
             </div>
 

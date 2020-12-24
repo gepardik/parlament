@@ -3,7 +3,14 @@ import {Link} from 'react-router-dom'
 
 export const LawsList = ({ laws, pageTitle }) => {
     if (!laws.length) {
-        return <p className="text-center">No laws!</p>
+        return (
+            <div className="jumbotron jumbotron-fluid bg-light">
+                <div className="container">
+                        <h1 className="display-4">{pageTitle}</h1>
+                        <p className="text-center">No laws!</p>
+                    </div>
+            </div>
+        )
     }
 
     return (

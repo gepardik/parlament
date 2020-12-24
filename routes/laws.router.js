@@ -3,20 +3,22 @@ const Law = require('../models/Law')
 const auth = require('../middleware/auth.middleware')
 const router = Router()
 
-//  /api/law/current
-router.get('/current', async (req, res) => {
+//  /api/law/type/country/local
+router.get('/:type/:country', async (req, res) => {
+    const current = req.params.type === 'current' ? true : false
     try {
-        const laws = await Law.find({ current: true }).lean()
+        const laws = await Law.find({ current: current, country: req.params.country }).lean()
         res.json(laws)
     } catch (e) {
         res.status(500).json({ message: 'Something went wrong. Try again!' })
     }
 })
 
-//  /api/law/past
-router.get('/past', async (req, res) => {
+//  /api/law/type/country/local
+router.get('/:type/:country/:local', async (req, res) => {
+    const current = req.params.type === 'current' ? true : false
     try {
-        const laws = await Law.find({ current: false }).lean()
+        const laws = await Law.find({ current: current, country: req.params.country, local: req.params.local }).lean()
         res.json(laws)
     } catch (e) {
         res.status(500).json({ message: 'Something went wrong. Try again!' })

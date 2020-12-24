@@ -10,14 +10,14 @@ export const useAuth = () => {
     const [role, setRole] = useState(null)
     const [userCountry, setUserCountry] = useState(null)
 
-    const login = useCallback((jwtToken, id, username, role, country) => {
+    const login = useCallback((jwtToken, id, username, role, userCountry) => {
         setToken(jwtToken)
         setUserId(id)
         setUserName(username)
         setRole(role)
-        setUserCountry(country)
+        setUserCountry(userCountry)
         localStorage.setItem(storageName, JSON.stringify({
-            userId: id, token: jwtToken, userName: username, role, userCountry: country
+            userId: id, token: jwtToken, userName: username, role, userCountry
         }))
     }, [])
 

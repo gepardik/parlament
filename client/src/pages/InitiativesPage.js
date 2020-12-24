@@ -5,6 +5,7 @@ import {Loader} from "../components/Loader"
 import {AuthContext} from "../context/AuthContext"
 
 export const InitiativesPage = props => {
+    const countryContext = props.context
     const {token} = useContext(AuthContext)
     const [initiatives, setInitiatives] = useState([])
     const {request, loading} = useHttp()
@@ -13,14 +14,25 @@ export const InitiativesPage = props => {
                     : 'Top Initiative'
 
     const fetchInitiatives = useCallback(async () => {
-        const headers = (props.type === 'my')
-            ? { Authorization: `Bearer ${token}`}
-            : {}
+        let country = null
+        let headers = {}
+        let url = `/api/initiative/${props.type}`
+        if (props.type === 'my') {
+            headers = { Authorization: `Bearer ${token}`}
+        } else {
+            if (countryContext) {
+                country = countryContext.country
+                if (country) {
+                    url += `/${country}`
+                }
+            }
+        }
+
         try {
-            const fetched = await request(`/api/initiative/${props.type}`, 'GET', null, headers)
+            const fetched = await request(url, 'GET', null, headers)
             setInitiatives(fetched)
         } catch (e) {}
-    }, [request, props.type, token])
+    }, [request, props.type, token, countryContext])
 
     useEffect(() => {
         fetchInitiatives()

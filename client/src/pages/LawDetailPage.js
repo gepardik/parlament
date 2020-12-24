@@ -18,7 +18,7 @@ export const LawDetailPage = () => {
     const  message = useMessage()
     const authorized = !!token
 
-    const url = "http://sambala.ee/detail/5fcd225e0455b323a075afd0" //String(window.location)
+    const url = String(window.location)  //"http://sambala.ee/detail/5fcd225e0455b323a075afd0" //String(window.location)
     let title = `Vote for the Law!`
     const size = "2.5rem"
 
