@@ -49,7 +49,7 @@ export const LandingPage = () => {
                                 <div className="row mt-2">
                                     {reducedCountries.map((country, index2) => {
                                         return (
-                                            <div className="col-3" key={index2}>
+                                            <div className="col-6 col-sm-3" key={index2}>
                                                 <CountryLocalContextConsumer>
                                                     {context => (
                                                         <a href={'/current'} onClick={linkClickHandler.bind(null, context, country.code)}>
