@@ -48,15 +48,17 @@ export const LandingPage = () => {
                                 </div>
                                 <div className="row mt-2">
                                     {reducedCountries.map((country, index2) => {
-                                        return <div className="col-sm" key={index2}>
-                                            <CountryLocalContextConsumer>
-                                                {context => (
-                                                    <a href={'/current'} onClick={linkClickHandler.bind(null, context, country.code)}>
-                                                        {country.name.split(',')[0]}
-                                                    </a>
-                                                )}
-                                            </CountryLocalContextConsumer>
-                                        </div>
+                                        return (
+                                            <div className="col-3" key={index2}>
+                                                <CountryLocalContextConsumer>
+                                                    {context => (
+                                                        <a href={'/current'} onClick={linkClickHandler.bind(null, context, country.code)}>
+                                                            {country.name.split(',')[0]}
+                                                        </a>
+                                                    )}
+                                                </CountryLocalContextConsumer>
+                                            </div>
+                                        )
                                     })}
                                 </div>
                             </div>
