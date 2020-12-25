@@ -37,6 +37,11 @@ export const LandingPage = () => {
                     {
                         continents.map((continent, index) => {
                             const reducedCountries = continent.countries.filter(country => countries.includes(country.code))
+
+                            if (reducedCountries.length === 0) {
+                                return ''
+                            }
+
                             return <div className="container mb-4" key={index}>
                                 <div className="title">
                                     <h5>{continent.name}</h5>

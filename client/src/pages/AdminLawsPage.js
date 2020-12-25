@@ -89,6 +89,17 @@ export const AdminLawsPage = () => {
                     onChange={changeCountryLocalHandler.bind(null, 'local')}
                 />
             </div>
+            <div className="input-group mb-3">
+                <input
+                    type="text"
+                    id="video"
+                    name="video"
+                    className="form-control"
+                    placeholder="Add video url"
+                    value={law.video}
+                    onChange={changeHandler}
+                />
+            </div>
             <div className="input-field">
                 <button className='btn btn-primary btn-lg mt-2' onClick={createHandler}>Save</button>
             </div>

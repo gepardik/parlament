@@ -9,7 +9,7 @@ export const AdminPage = () => {
             <nav>
                 <div className="nav nav-tabs" id="nav-tab" role="tablist">
                     <a className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-countries" role="tab"
-                       aria-controls="nav-countries" aria-selected="true">Contries</a>
+                       aria-controls="nav-countries" aria-selected="true">Countries</a>
                     <a className="nav-link" id="nav-laws-tab" data-bs-toggle="tab" href="#nav-laws" role="tab"
                        aria-controls="nav-laws" aria-selected="false">Laws</a>
                     <a className="nav-link" id="nav-slider-tab" data-bs-toggle="tab" href="#nav-slider" role="tab"
