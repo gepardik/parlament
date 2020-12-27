@@ -4,6 +4,11 @@ import {AuthContext} from "../context/AuthContext"
 import logo from '../img/logo.svg'
 import homeIcon from '../icons/home.svg'
 import userIcon from '../icons/user.svg'
+import currentIcon from '../icons/current.svg'
+import localIcon from '../icons/local.svg'
+import pastIcon from '../icons/past.svg'
+import initiativeIcon from '../icons/initiative.svg'
+
 import {CountryLocalContextConsumer} from "../context/CountryLocalContext"
 import {SelectedCountryLocal} from "./SelectedCountryLocal"
 
@@ -36,14 +41,21 @@ export const Navbar = () => {
                         </NavLink>
                     </li>
                     <li className="nav-item mr-4">
-                        <NavLink to='/current' className="nav-link">Current</NavLink>
+                        <NavLink to='/current' className="nav-link pl-4 with-icon" style={{background: `url("${currentIcon}")`}}>Current</NavLink>
                     </li>
                     <li className="nav-item mr-4">
-                        <NavLink to='/past' className="nav-link">Past</NavLink>
+                        <NavLink to='/past' className="nav-link pl-4 with-icon" style={{background: `url("${pastIcon}")`}}>Past</NavLink>
                     </li>
                     <li className="nav-item dropdown mr-4">
-                        <span className="nav-link dropdown-toggle" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span
+                            className="nav-link pl-4 with-icon dropdown-toggle"
+                            id="navbarDropdown"
+                            role="button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            style={{background: `url("${initiativeIcon}")`}}
+                        >
                             Initiatives
                         </span>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -67,8 +79,15 @@ export const Navbar = () => {
                         </div>
                     </li>
                     <li className="nav-item dropdown mr-4">
-                        <span className="nav-link dropdown-toggle" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span
+                            className="nav-link pl-4 with-icon dropdown-toggle"
+                            style={{background: `url("${localIcon}")`}}
+                            id="navbarDropdown"
+                            role="button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        >
                             Local
                         </span>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -85,13 +104,13 @@ export const Navbar = () => {
                         <span className="nav-link dropdown-toggle" id="navbarDropdown" role="button"
                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src={userIcon} alt="" />
-                            { auth.userName ? <span className="ml-2 text-success">{ auth.userName }</span> : ''}
+                            { auth.isAuthenticated ? <span className="ml-2 text-success">{ auth.userName }</span> : ''}
 
                         </span>
 
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                             {
-                                !(auth.token)
+                                !(auth.isAuthenticated)
                                 ?
                                     <>
                                         <a className="dropdown-item" href="/register">Register</a>

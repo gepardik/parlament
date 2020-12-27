@@ -6,6 +6,32 @@ html, body {
     font-family: 'Thasadith', sans-serif;
 }
 
+h1, h2, h3, h4, h6 {
+    font-family: Roboto;
+}
+
+.container-bordered {
+    box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.15) !important;
+}
+
+.section-heading {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 30px;
+    background-color: #f2f4f5;
+    padding: 10px 25px;
+    border-left: 4px solid #f74a06;
+    text-align: left;
+    font-weight: bold;
+}
+
+.section-heading h5 {
+    margin-bottom: 0;
+    text-transform: uppercase;
+    font-size: 20px;
+    line-height: 1;
+}
+
 .main {
     max-width: 900px;
     min-height: 1000px;
@@ -26,6 +52,11 @@ html, body {
     height: 127px;
     width: 295px;
     background: url("img/logo.svg");
+}
+
+.vote-box {
+    border: 3px solid #f2f4f5!important;
+    border-radius: 6px;
 }
 
 @media(max-width: 800px) {
@@ -103,6 +134,46 @@ html, body {
     height: 100%;
 }
 
+.ck.ck-editor {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.ck.ck-editor__main .ck-editor__editable {
+    min-height: 300px;
+}
+
+.law-bg {
+    background-image: url('./img/books.jpg');
+}
+
+.card-top-text {
+    padding: 4rem 2rem 2rem 2rem;
+    background: rgba(0, 0, 0, .5);
+    color: white;
+    text-transform: uppercase;
+}
+
+.share:hover {
+    background-color: #000!important;
+}
+
+.table {
+    color: #555!important;
+}
+
+a.nav-link:hover, a.nav-link:active, .nav-link:hover, a.dropdown-item:hover {
+    color: #f74a06!important;
+}
+
+@media only screen and (max-width: 770px) {
+    .container {
+        padding: 0;
+        margin: 0 auto;
+        width: 100%;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     #toast-container {
         min-width: 100%;
@@ -174,3 +245,13 @@ html, body {
     }
 }
 
+@media only screen and (max-width: 570px) {
+    .table td, .table th {
+        padding-left: .1rem!important;
+        padding-right: .1rem!important;
+    }
+
+    .table thead th {
+        font-size: .8rem;
+    }
+}

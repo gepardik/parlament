@@ -2,6 +2,8 @@ import React, {useContext, useEffect, useState} from 'react'
 import {useHttp} from '../hooks/http.hook'
 import {AuthContext} from '../context/AuthContext'
 import {useHistory} from 'react-router-dom'
+import { CKEditor } from '@ckeditor/ckeditor5-react'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 
 export const CreatePage = () => {
     const history = useHistory()
@@ -29,6 +31,10 @@ export const CreatePage = () => {
         setInitiative({ ...initiative, [event.target.name]: event.target.value })
     }
 
+    const changeHandlerContent = (key, value) => {
+        setInitiative({ ...initiative, [key]: value })
+    }
+
     return (
         <div className='container'>
             <h1 className={'mt-4 mb-4'}>Create Initiative</h1>
@@ -45,16 +51,27 @@ export const CreatePage = () => {
                 />
             </div>
             <div className="input-group">
-                <textarea
-                    rows={20}
-                    className="form-control"
-                    placeholder="Enter content"
+                <CKEditor
                     id="content"
                     name="content"
-                    value={initiative.content}
-                    onChange={changeHandler}
-                >
-                </textarea>
+                    editor={ ClassicEditor }
+                    data="<p>Enter content</p>"
+                    onReady={ editor => {
+                        // You can store the "editor" and use when it is needed.
+                        console.log( 'Editor is ready to use!', editor );
+                    } }
+                    onChange={ ( event, editor ) => {
+                        const data = editor.getData();
+                        changeHandlerContent('content', data)
+                        console.log( { event, editor, data } );
+                    } }
+                    onBlur={ ( event, editor ) => {
+                        console.log( 'Blur.', editor );
+                    } }
+                    onFocus={ ( event, editor ) => {
+                        console.log( 'Focus.', editor );
+                    } }
+                />
             </div>
             <div className="input-field">
                 <button className='btn btn-primary btn-lg mt-2' onClick={createHandler}>Save</button>

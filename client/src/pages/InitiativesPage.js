@@ -43,8 +43,8 @@ export const InitiativesPage = props => {
     }
 
     return (
-        <div className='container'>
+        <>
             { !loading && <InitiativesList initiatives={initiatives} pageTitle={pageTitle}/> }
-        </div>
+        </>
     )
 }

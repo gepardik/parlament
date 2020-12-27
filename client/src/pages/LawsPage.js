@@ -39,8 +39,8 @@ export const LawsPage = props => {
     }
 
     return (
-        <div className='container'>
+        <>
             { !loading && <LawsList laws={laws} pageTitle={pageTitle}/> }
-        </div>
+        </>
     )
 }
