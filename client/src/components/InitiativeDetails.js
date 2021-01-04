@@ -74,31 +74,50 @@ export const InitiativeDetails = ({ initiative, likeHandler, dislikeHandler, aut
                             </TwitterShareButton>
                         </div>
 
-                        {authorized ?
+
                             <div className="vote-box m-4 p-4 text-center">
                                 <div className="section-heading">
                                     <h5>Vote</h5>
                                 </div>
-                                <button
-                                    className="btn btn-success btn m-2"
-                                    onClick={likeHandler}
-                                >
-                                    <img src={likeIcon} alt=""/>
-                                    &nbsp;
-                                    For
-                                </button>
-                                <button
-                                    className="btn btn-danger btn m-2"
-                                    onClick={dislikeHandler}
-                                >
-                                    <img src={dislikeIcon} alt=""/>
-                                    &nbsp;
-                                    Against
-                                </button>
+                                {authorized ?
+                                <>
+                                    <button
+                                        className="btn btn-success btn m-2"
+                                        onClick={likeHandler}
+                                    >
+                                        <img src={likeIcon} alt=""/>
+                                        &nbsp;
+                                        For
+                                    </button>
+                                    <button
+                                        className="btn btn-danger btn m-2"
+                                        onClick={dislikeHandler}
+                                    >
+                                        <img src={dislikeIcon} alt=""/>
+                                        &nbsp;
+                                        Against
+                                    </button>
+                                </>
+                                : <>
+                                        <button
+                                            className="btn btn-success btn m-2"
+                                            onClick={() => {document.location.replace('/login')}}
+                                        >
+                                            <img src={likeIcon} alt=""/>
+                                            &nbsp;
+                                            For
+                                        </button>
+                                        <button
+                                            className="btn btn-danger btn m-2"
+                                            onClick={() => {document.location.replace('/login')}}
+                                        >
+                                            <img src={dislikeIcon} alt=""/>
+                                            &nbsp;
+                                            Against
+                                        </button>
+                                    </>}
                             </div>
-                            :
-                            <h3 className='text-danger'>You must be authorized to vote</h3>
-                        }
+
                 </div>
             </div>
         </>

@@ -79,7 +79,7 @@ router.get('/:id', async (req, res) => {
 })
 
 //   /api/initiative/vote
-router.post('/vote', async (req, res) => {
+router.post('/vote', auth, async (req, res) => {
     try {
         const initiative = await Initiative.findOne({ _id: req.body._id })
 

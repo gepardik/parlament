@@ -41,7 +41,7 @@ const schema = new Schema({
         type: String
     },
     video: {
-    type: String
+    type: [String]
     }
 })
 

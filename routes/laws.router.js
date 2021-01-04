@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const Law = require('../models/Law')
+const User = require('../models/User')
 const auth = require('../middleware/auth.middleware')
 const router = Router()
 
@@ -55,9 +56,18 @@ router.get('/:id', async (req, res) => {
 })
 
 //   /api/law/vote
-router.post('/vote', async (req, res) => {
+router.post('/vote', auth, async (req, res) => {
     try {
         const law = await Law.findOne({ _id: req.body._id })
+        const user = await User.findOne({ _id: req.user.userId })
+
+        if (user.country !== law.country) {
+            return res.status(400).json({message: 'You can vote only for the laws of your country!'})
+        }
+
+        if (law.local && law.local !== user.local) {
+            return res.status(400).json({message: 'You can vote only for the laws of your country and local!'})
+        }
 
         if (law.vote_for.find(voter => String(voter) === req.body.voter)
             || law.vote_against.find(voter => String(voter) === req.body.voter)) {

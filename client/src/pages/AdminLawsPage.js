@@ -5,6 +5,7 @@ import {useHistory} from 'react-router-dom'
 import {CountryDropdown, RegionDropdown} from "react-country-region-selector"
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import {VideoInput} from "../components/VideoInput"
 
 export const AdminLawsPage = () => {
     const history = useHistory()
@@ -13,13 +14,20 @@ export const AdminLawsPage = () => {
     const [law, setLaw] = useState({
         title: '',
         content: '',
+        video: ['']
     })
-
     useEffect(() => {
         window.M.updateTextFields()
     }, [])
 
+    const clearVideos = () => {
+        const clearedVideos = law.video.filter(video => video.trim() !== '')
+        console.log(clearedVideos)
+        setLaw({...law, video: clearedVideos})
+    }
+
     const createHandler = async () => {
+        clearVideos()
         try {
             const data = await request('/api/law/create', 'POST', {...law}, {
                 Authorization: `Bearer ${auth.token}`
@@ -40,6 +48,19 @@ export const AdminLawsPage = () => {
         const name = type === 'country' ? 'country' : 'local'
 
         setLaw({ ...law, [name]: event })
+    }
+
+    const addVideoHandler = () => {
+        const videos = [...law.video].concat([])
+        videos.push('')
+        setLaw({...law, video: videos})
+    }
+
+    const changeVideoHandler = event => {
+        const index = +event.target.name.split('-')[1]
+        const videos = [...law.video].concat([])
+        videos[index] = event.target.value
+        setLaw({...law, video: videos})
     }
 
     return (
@@ -79,18 +100,6 @@ export const AdminLawsPage = () => {
                     } }
                 />
             </div>
-            {/*<div className="input-group">*/}
-            {/*    <textarea*/}
-            {/*        rows={20}*/}
-            {/*        className="form-control"*/}
-            {/*        placeholder="Enter content"*/}
-            {/*        id="content"*/}
-            {/*        name="content"*/}
-            {/*        value={law.content}*/}
-            {/*        onChange={changeHandler}*/}
-            {/*    >*/}
-            {/*    </textarea>*/}
-            {/*</div>*/}
             <div className="form-group">
                 <label htmlFor="country">Country</label>
                 <CountryDropdown
@@ -117,17 +126,11 @@ export const AdminLawsPage = () => {
                     onChange={changeCountryLocalHandler.bind(null, 'local')}
                 />
             </div>
-            <div className="input-group mb-3">
-                <input
-                    type="text"
-                    id="video"
-                    name="video"
-                    className="form-control"
-                    placeholder="Add video url"
-                    value={law.video}
-                    onChange={changeHandler}
-                />
-            </div>
+            {
+                law.video.map((video, index, arr) => {
+                    return <VideoInput number={index} value={law.video[index]} changeHandler={changeVideoHandler} addVideoHandler={addVideoHandler} last={index + 1 === arr.length} />
+                })
+            }
             <div className="input-field">
                 <button className='btn btn-primary btn-lg mt-2' onClick={createHandler}>Save</button>
             </div>
