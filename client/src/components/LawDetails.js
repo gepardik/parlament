@@ -46,14 +46,19 @@ export const LawDetails = ({ law, likeHandler, dislikeHandler, authorized }) => 
                         <p className="card-text" dangerouslySetInnerHTML={{ __html: law.content }} ></p>
                     </div>
                     {
-                        law.video.map((video, index) => (
-                            <div className="video-container m-4" key={index}>
-                                <iframe title={law.title} width="100%" height="auto" src={prepareVideoUrl(video)} frameBorder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen>
-                                </iframe>
-                            </div>
-                        ))
+                        law.video.map((video, index) => {
+                            if (video.trim() === '') {
+                                return ''
+                            }
+
+                            return (
+                                <div className="video-container m-4" key={index}>
+                                    <iframe title={law.title} width="100%" height="auto" src={prepareVideoUrl(video)} frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen>
+                                    </iframe>
+                                </div>
+                        )})
                     }
                     <hr className="my-4" />
 
