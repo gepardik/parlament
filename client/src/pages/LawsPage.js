@@ -40,7 +40,7 @@ export const LawsPage = props => {
 
     return (
         <>
-            { !loading && <LawsList laws={laws} pageTitle={pageTitle}/> }
+            { !loading && <LawsList laws={laws} pageTitle={pageTitle} current={props.type === 'current'} context={countryContext}/> }
         </>
     )
 }

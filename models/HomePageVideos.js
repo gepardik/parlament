@@ -1,13 +1,21 @@
 const { Schema, model } = require('mongoose')
 
 const schema = new Schema({
-        place: {
-            type: Number,
-            required: true,
-            enum: [1, 2, 3]  // 1-current laws |  2-past laws | 3-top initiatives
-        },
-        videos: {
+        video_current: {
             type: [String]
+        },
+        video_past: {
+            type: [String]
+        },
+        video_initiative: {
+            type: [String]
+        },
+        country: {
+            type: String,
+            required: true
+        },
+        local: {
+            type: String
         }
     }
 )

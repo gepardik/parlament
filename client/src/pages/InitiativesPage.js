@@ -44,7 +44,7 @@ export const InitiativesPage = props => {
 
     return (
         <>
-            { !loading && <InitiativesList initiatives={initiatives} pageTitle={pageTitle}/> }
+            { !loading && <InitiativesList initiatives={initiatives} pageTitle={pageTitle} context={countryContext}/> }
         </>
     )
 }

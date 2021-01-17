@@ -1,7 +1,7 @@
 import React from 'react'
 import AdminCountryPage from "./AdminCountryPage"
 import {AdminLawsPage} from "./AdminLawsPage"
-import {VideosPage} from "./VideosPage"
+import {AdminVideosPage} from "./AdminVideosPage"
 
 export const AdminPage = () => {
     return (
@@ -36,7 +36,7 @@ export const AdminPage = () => {
                     <AdminLawsPage />
                 </div>
                 <div className="tab-pane fade" id="nav-videos" role="tabpanel" aria-labelledby="nav-videos-tab">
-                    <VideosPage />
+                    <AdminVideosPage />
                 </div>
                 <div className="tab-pane fade" id="nav-slider" role="tabpanel" aria-labelledby="nav-slider-tab">Slider
                 </div>

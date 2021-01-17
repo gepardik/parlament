@@ -22,7 +22,6 @@ export const AdminLawsPage = () => {
 
     const clearVideos = () => {
         const clearedVideos = law.video.filter(video => video.trim() !== '')
-        console.log(clearedVideos)
         setLaw({...law, video: clearedVideos})
     }
 
