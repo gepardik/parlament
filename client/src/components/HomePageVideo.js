@@ -48,7 +48,7 @@ export const HomePageVideo = props => {
     return (
         <>
             {
-                videos[type] && videos[type].map((vid, index) => {
+                videos && videos[type] && videos[type].map((vid, index) => {
                     if (vid.trim() === '') {
                         return ''
                     }
