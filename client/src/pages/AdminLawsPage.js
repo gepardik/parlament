@@ -55,6 +55,15 @@ export const AdminLawsPage = () => {
         setLaw({...law, video: videos})
     }
 
+    const deleteVideoHandler = event => {
+        const lawVideos = [...law.video].concat([])
+        const index = +event.target.value
+        if (index >= 0) {
+            lawVideos.splice(index, 1)
+        }
+        setLaw({...law, video: lawVideos})
+    }
+
     const changeVideoHandler = event => {
         const index = +event.target.name.split('-')[1]
         const videos = [...law.video].concat([])
@@ -64,6 +73,33 @@ export const AdminLawsPage = () => {
 
     return (
         <div className='container'>
+            <div className="form-group">
+                <label htmlFor="country">Country</label>
+                <CountryDropdown
+                    className="form-control"
+                    id="country"
+                    name="country"
+                    valueType="short"
+                    value={law.country}
+                    onChange={changeCountryLocalHandler.bind(null, 'country')}
+                />
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="local">Local</label>
+                <RegionDropdown
+                    defaultOptionLabel="Select Local"
+                    country={law.country}
+                    className="form-control"
+                    id="local"
+                    name="local"
+                    countryValueType="short"
+                    valueType="short"
+                    value={law.local}
+                    onChange={changeCountryLocalHandler.bind(null, 'local')}
+                />
+            </div>
+
             <h1 className={'mt-4 mb-4'}>Create Law</h1>
             <div className="input-group mb-3">
                 <input
@@ -99,35 +135,16 @@ export const AdminLawsPage = () => {
                     } }
                 />
             </div>
-            <div className="form-group">
-                <label htmlFor="country">Country</label>
-                <CountryDropdown
-                    className="form-control"
-                    id="country"
-                    name="country"
-                    valueType="short"
-                    value={law.country}
-                    onChange={changeCountryLocalHandler.bind(null, 'country')}
-                />
-            </div>
-
-            <div className="form-group">
-                <label htmlFor="local">Local</label>
-                <RegionDropdown
-                    defaultOptionLabel="Select Local"
-                    country={law.country}
-                    className="form-control"
-                    id="local"
-                    name="local"
-                    countryValueType="short"
-                    valueType="short"
-                    value={law.local}
-                    onChange={changeCountryLocalHandler.bind(null, 'local')}
-                />
-            </div>
             {
                 law.video.map((video, index, arr) => {
-                    return <VideoInput number={index} value={law.video[index]} changeHandler={changeVideoHandler} addVideoHandler={addVideoHandler} last={index + 1 === arr.length} />
+                    return <VideoInput
+                        number={index}
+                        value={law.video[index]}
+                        changeHandler={changeVideoHandler}
+                        addVideoHandler={addVideoHandler}
+                        deleteVideoHandler={deleteVideoHandler}
+                        last={index + 1 === arr.length}
+                    />
                 })
             }
             <div className="input-field">

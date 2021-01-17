@@ -23,6 +23,8 @@ export const VideoInput = props => {
                 </button>
                 : <button
                         className={'btn btn-danger ml-2'}
+                        onClick={props.deleteVideoHandler}
+                        value={props.number}
                     >
                         -
                     </button>

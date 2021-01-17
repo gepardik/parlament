@@ -56,6 +56,16 @@ export const AdminVideosPage = () => {
         newVideos[index] = event.target.value
         setVideo({...video, [place]: newVideos})
     }
+
+    const deleteVideoHandler = (place, event) => {
+        const addedVideos = [...video[place]].concat([])
+        const index = +event.target.value
+        if (index >= 0) {
+            addedVideos.splice(index, 1)
+        }
+        setVideo({...video, [place]: addedVideos})
+    }
+
     return (
         <>
             <h2>Add Videos to Home Page</h2>
@@ -96,6 +106,7 @@ export const AdminVideosPage = () => {
                                     value={video.video_current[index]}
                                     changeHandler={changeVideoHandler.bind(null, 'video_current')}
                                     addVideoHandler={addVideoHandler.bind(null, 'video_current')}
+                                    deleteVideoHandler={deleteVideoHandler.bind(null, 'video_current')}
                                     last={index + 1 === arr.length}
                             />
                         })
@@ -111,6 +122,7 @@ export const AdminVideosPage = () => {
                                 value={video.video_past[index]}
                                 changeHandler={changeVideoHandler.bind(null, 'video_past')}
                                 addVideoHandler={addVideoHandler.bind(null, 'video_past')}
+                                deleteVideoHandler={deleteVideoHandler.bind(null, 'video_past')}
                                 last={index + 1 === arr.length}
                             />
                         })
@@ -126,6 +138,7 @@ export const AdminVideosPage = () => {
                                 value={video.video_initiative[index]}
                                 changeHandler={changeVideoHandler.bind(null, 'video_initiative')}
                                 addVideoHandler={addVideoHandler.bind(null, 'video_initiative')}
+                                deleteVideoHandler={deleteVideoHandler.bind(null, 'video_initiative')}
                                 last={index + 1 === arr.length}
                             />
                         })
