@@ -99,7 +99,7 @@ router.post(
                 { expiresIn: '3h' }
             )
 
-            res.json({ token, userId: user.id, userName: user.username, role: user.role, userCountry: user.country })
+            res.json({ token, userId: user.id, userName: user.username, role: user.role, userCountry: user.country, userLocal: user.local })
 
         } catch (e) {
             res.status(500).json({message: 'Something went wrong! Try again!'})

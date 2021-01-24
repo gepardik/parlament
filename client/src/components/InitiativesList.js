@@ -1,18 +1,21 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {Link} from 'react-router-dom'
-import {HomePageVideo} from "./HomePageVideo";
-import {Navbar} from "./Navbar";
+import {HomePageVideo} from "./HomePageVideo"
+import {AuthContext} from "../context/AuthContext"
 
-export const InitiativesList = ({ initiatives, pageTitle, context }) => (
-            <>
-                <div className="container container-bordered p-0 mt-4">
-                    <div className="card">
-                        <div className="card-body">
-                            <div className="section-heading">
-                                <h5 className="display-4">{pageTitle}</h5>
-                            </div>
-                            {
-                                !(initiatives.length)
+export const InitiativesList = ({ initiatives, pageTitle, context }) => {
+    const { country: contextCountry } = context
+    const { userCountry } = useContext(AuthContext)
+    return (
+        <>
+            <div className="container container-bordered p-0 mt-4">
+                <div className="card">
+                    <div className="card-body">
+                        <div className="section-heading">
+                            <h5 className="display-4">{pageTitle}</h5>
+                        </div>
+                        {
+                            !(initiatives.length)
                                 ? <p className="text-center">No initiatives!</p>
                                 : (
                                     <table className="table bg-white table-hover">
@@ -50,7 +53,13 @@ export const InitiativesList = ({ initiatives, pageTitle, context }) => (
                                                         {ini.vote_for.length - ini.vote_against.length}
                                                     </td>
                                                     <td className="text-right">
-                                                        <Link to={`/detail/${ini._id}`} className={'btn btn-info'}>Vote</Link>
+                                                        <Link to={`/detail/${ini._id}`} className={'btn btn-info'}>
+                                                            {
+                                                                userCountry === contextCountry
+                                                                    ? <>Vote</>
+                                                                    : <>Inspect</>
+                                                            }
+                                                        </Link>
                                                     </td>
                                                 </tr>
                                             )
@@ -58,11 +67,13 @@ export const InitiativesList = ({ initiatives, pageTitle, context }) => (
                                         </tbody>
                                     </table>
                                 )
-                            }
-                            {window.location.pathname === '/home' && <HomePageVideo type='video_initiative' context={context}/>}
+                        }
+                        {window.location.pathname === '/home' && <HomePageVideo type='video_initiative' context={context}/>}
 
-                        </div>
                     </div>
                 </div>
-            </>
-        )
+            </div>
+        </>
+    )
+}
+

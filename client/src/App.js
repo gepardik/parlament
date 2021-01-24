@@ -9,7 +9,7 @@ import 'materialize-css'
 import {CountryLocalContextProvider} from "./context/CountryLocalContext";
 
 function App() {
-    const {token, userId, userName, userCountry, role, login, logout, ready} = useAuth()
+    const {token, userId, userName, userCountry, userLocal, role, login, logout, ready} = useAuth()
     const isAuthenticated = !!token
     const routes = useRoutes(isAuthenticated)
 
@@ -20,7 +20,7 @@ function App() {
     return (
         <CountryLocalContextProvider>
             <AuthContext.Provider value={{
-                token, login, logout, userId, userName, userCountry, role, isAuthenticated
+                token, login, logout, userId, userName, userCountry, userLocal, role, isAuthenticated
             }}>
                 <Router>
                     {window.location.pathname === '/' ? '' : <Navbar />}

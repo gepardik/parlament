@@ -10,6 +10,11 @@ import TwitterIcon from "../icons/twitter.svg";
 export const LawDetails = ({ law, likeHandler, dislikeHandler, authorized }) => {
     const url = String(window.location)  //"http://sambala.ee/detail/5fcd225e0455b323a075afd0" //String(window.location)
     let title = `Vote for the Law!`
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ]
+    const [month, date, year]    = new Date(law.last_voting_date).toLocaleDateString("en-US").split("/")
+    const monthName = monthNames[month - 1]
     const prepareVideoUrl = url => {
         let newUrl = ''
         const urlSplited = url.split('watch?v=')
@@ -104,22 +109,31 @@ export const LawDetails = ({ law, likeHandler, dislikeHandler, authorized }) => 
                             <div className="section-heading">
                                 <h5>Vote</h5>
                             </div>
-                            <button
-                                className="btn btn-success btn m-2"
-                                onClick={likeHandler}
-                            >
-                                <img src={likeIcon} alt=""/>
-                                &nbsp;
-                                For
-                            </button>
-                            <button
-                                className="btn btn-danger btn m-2"
-                                onClick={dislikeHandler}
-                            >
-                                <img src={dislikeIcon} alt=""/>
-                                &nbsp;
-                                Against
-                            </button>
+                            <h3>Last voting Date: <span className="text-danger">{date} of {monthName} {year}</span></h3>
+                            {
+                                new Date(law.last_voting_date) >= new Date()
+                                && (
+                                    <>
+                                        <button
+                                            className="btn btn-success btn m-2"
+                                            onClick={likeHandler}
+                                        >
+                                            <img src={likeIcon} alt=""/>
+                                            &nbsp;
+                                            For
+                                        </button>
+                                        <button
+                                            className="btn btn-danger btn m-2"
+                                            onClick={dislikeHandler}
+                                            >
+                                            <img src={dislikeIcon} alt=""/>
+                                            &nbsp;
+                                            Against
+                                        </button>
+                                    </>
+                                )
+                            }
+
                         </div>
                         :
                         <h3 className='text-danger'>You must be authorized to vote</h3>

@@ -18,10 +18,6 @@ const schema = new Schema({
         ref: 'User',
         default: null
     },
-    current: {
-        type: Boolean,
-        default: true
-    },
     vote_for:
         [{
             type: Types.ObjectId,
@@ -39,6 +35,10 @@ const schema = new Schema({
     ,
     local: {
         type: String
+    },
+    last_voting_date: {
+        type: Date,
+        required: true
     },
     video: {
         type: [String]

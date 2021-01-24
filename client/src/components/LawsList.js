@@ -1,16 +1,40 @@
-import React from 'react'
-import {Link, NavLink} from 'react-router-dom'
-import {HomePageVideo} from "./HomePageVideo"
+import React, {useContext} from 'react'
+import { Link } from 'react-router-dom'
+import { HomePageVideo } from "./HomePageVideo"
+import { CountryRegionData } from "react-country-region-selector"
+import {AuthContext} from "../context/AuthContext"
+
 
 export const LawsList = ({ laws, pageTitle, current, context }) => {
+    const { country: contextCountry, local: contextLocal } = context
+    const { userCountry, userLocal } = useContext(AuthContext)
     const type = current ? 'video_current' : 'video_past'
+    const clData = CountryRegionData
+    const country = clData.find((country) => country[1] === context.country)
+    const countryName = country[0]
+    let localName = null
+    if (context.local) {
+        const locals = country[2].split('|').map(local => {
+            const localData = local.split('~')
+            const localName = localData[0]
+            const localCode = localData[1]
+            return {
+                code: localCode,
+                name: localName
+            }
+        })
+        if (locals.length) {
+            localName = locals.find(local => local.code === context.local).name;
+        }
+    }
+
     return (
         <>
             <div className="container container-bordered p-0 mt-4">
                 <div className="card">
                     <div className="card-body">
                         <div className="section-heading">
-                            <h5 className="display-4">{pageTitle}</h5>
+                            <h5 className="display-4">{pageTitle} - {countryName} {localName}</h5>
                         </div>
                         {
                             !(laws.length)
@@ -52,7 +76,17 @@ export const LawsList = ({ laws, pageTitle, current, context }) => {
                                                 </td>
                                                 <td className="text-right">
                                                     <Link to={`/law/detail/${law._id}`}
-                                                          className={'btn btn-info'}>Vote</Link>
+                                                          className={'btn btn-info'}>
+                                                        {
+                                                            (userCountry === contextCountry
+                                                                && (userLocal === contextLocal
+                                                                    || contextLocal === null)
+                                                                && current
+                                                            )
+                                                            ? <>Vote</>
+                                                            : <>Inspect</>
+                                                        }
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         )

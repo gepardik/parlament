@@ -35,7 +35,7 @@ export const HomePageVideo = props => {
             const fetched = await request(url, 'GET')
             setVideos(fetched)
         } catch (e) {}
-    }, [request])
+    }, [request, context])
 
     useEffect(() => {
         fetchVideos(context)

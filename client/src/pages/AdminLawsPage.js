@@ -6,8 +6,12 @@ import {CountryDropdown, RegionDropdown} from "react-country-region-selector"
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import {VideoInput} from "../components/VideoInput"
+import DatePicker from "react-datepicker"
+import {useMessage} from "../hooks/message.hook"
+import "react-datepicker/dist/react-datepicker.css"
 
 export const AdminLawsPage = () => {
+    const message = useMessage()
     const history = useHistory()
     const auth = useContext(AuthContext)
     const {request} = useHttp()
@@ -16,6 +20,10 @@ export const AdminLawsPage = () => {
         content: '',
         video: ['']
     })
+    console.log(law)
+    const startDate = new Date()
+    const [endDate, setEndDate] = useState(new Date())
+
     useEffect(() => {
         window.M.updateTextFields()
     }, [])
@@ -31,8 +39,11 @@ export const AdminLawsPage = () => {
             const data = await request('/api/law/create', 'POST', {...law}, {
                 Authorization: `Bearer ${auth.token}`
             } )
+            message(data.message)
             history.push(`/law/detail/${data.law._id}`)
-        } catch (e) {}
+        } catch (e) {
+            message(e)
+        }
     }
 
     const changeHandler = event => {
@@ -52,8 +63,8 @@ export const AdminLawsPage = () => {
     const addVideoHandler = () => {
         const videos = [...law.video].concat([])
         videos.push('')
-        setLaw({...law, video: videos})
-    }
+        setLaw({...law, video: videos})    }
+
 
     const deleteVideoHandler = event => {
         const lawVideos = [...law.video].concat([])
@@ -69,6 +80,11 @@ export const AdminLawsPage = () => {
         const videos = [...law.video].concat([])
         videos[index] = event.target.value
         setLaw({...law, video: videos})
+    }
+
+    const changeDateHandler = (date) => {
+        setEndDate(date)
+        setLaw({...law, last_voting_date: date} )
     }
 
     return (
@@ -135,6 +151,17 @@ export const AdminLawsPage = () => {
                     } }
                 />
             </div>
+            <br />
+            <div className="input-group mb-3 align-middle">
+                <span>Last Date of Voting:&nbsp;</span>
+                <DatePicker
+                    className="form-control"
+                    selected={endDate}
+                    onChange={date => changeDateHandler(date)}
+                    minDate={startDate}
+                />
+            </div>
+            <br />
             {
                 law.video.map((video, index, arr) => {
                     return <VideoInput

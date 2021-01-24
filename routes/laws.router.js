@@ -6,9 +6,9 @@ const router = Router()
 
 //  /api/law/type/country/local
 router.get('/:type/:country', async (req, res) => {
-    const current = req.params.type === 'current' ? true : false
+    const current = req.params.type === 'current' ? {$gte : new Date()} : {$lt : new Date()}
     try {
-        const laws = await Law.find({ current: current, country: req.params.country }).lean()
+        const laws = await Law.find({ country: req.params.country, local: null, last_voting_date: current }).lean()
         res.json(laws)
     } catch (e) {
         res.status(500).json({ message: 'Something went wrong. Try again!' })
@@ -17,9 +17,9 @@ router.get('/:type/:country', async (req, res) => {
 
 //  /api/law/type/country/local
 router.get('/:type/:country/:local', async (req, res) => {
-    const current = req.params.type === 'current' ? true : false
+    const current = req.params.type === 'current' ? {$gte : new Date()} : {$lt : new Date()}
     try {
-        const laws = await Law.find({ current: current, country: req.params.country, local: req.params.local }).lean()
+        const laws = await Law.find({ country: req.params.country, local: req.params.local, last_voting_date: current }).lean()
         res.json(laws)
     } catch (e) {
         res.status(500).json({ message: 'Something went wrong. Try again!' })
@@ -29,17 +29,31 @@ router.get('/:type/:country/:local', async (req, res) => {
 // /api/law/create    POST
 router.post('/create', auth, async (req, res) => {
     try {
+        if (!req.body.country) {
+            return res.status(400).json({ message: 'Select country!' })
+        }
+        if (!req.body.title) {
+            return res.status(400).json({ message: 'Insert title!' })
+        }
+        if (!req.body.content) {
+            return res.status(400).json({ message: 'Insert content!' })
+        }
+        if (!req.body.last_voting_date) {
+            return res.status(400).json({ message: 'Select the Last Date of Voting!' })
+        }
+
         const law = new Law({
             title: req.body.title,
             content: req.body.content,
             author: req.user.userId,
             country: req.body.country,
             local: req.body.local,
+            last_voting_date: req.body.last_voting_date,
             video: req.body.video
         })
 
         await law.save()
-        res.status(201).json({ law })
+        res.status(201).json({ law, message: 'The law is added' })
     } catch (e) {
         res.status(500).json({ message: 'Something went wrong. Try again!' })
     }

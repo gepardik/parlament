@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useCallback, useEffect} from 'react'
 import {VideoInput} from "../components/VideoInput"
 import {CountryDropdown, RegionDropdown} from "react-country-region-selector"
 import {useState} from "react"
@@ -38,11 +38,31 @@ export const AdminVideosPage = () => {
             message(e)
         }
     }
+
+    const fetchVideos = useCallback(async (country, local = null) => {
+        let url = `/api/video`
+        if(country) {
+            url += `/${country}`
+
+            if (local) {
+                url += `/${local}`
+            }
+        }
+        try {
+            const fetched = await request(url, 'GET')
+            setVideo(fetched)
+        } catch (e) {}
+    }, [request])
+
     const changeCountryLocalHandler = (type = 'country', event) => {
         const name = type === 'country' ? 'country' : 'local'
 
         setVideo({ ...video, [name]: event })
     }
+
+    useEffect(() => {
+        fetchVideos(video.country, video.local)
+    }, [video, fetchVideos])
 
     const addVideoHandler = place => {
         const newVideos = [...video[place]].concat([])
