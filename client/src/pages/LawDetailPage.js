@@ -36,9 +36,12 @@ export const LawDetailPage = () => {
         return <Loader />
     }
 
-    const voteHandler = async (option) => {
+    const voteHandler = async (option, checked) => {
         try {
-
+            if (!checked) {
+                message('You should tick the checkbox to agree with the implications of this Bill!')
+                return
+            }
             const data = await request(`/api/law/vote`, 'POST', {_id: law._id, vote: option, voter: userId}, {
                 Authorization: `Bearer ${token}`
             } )
@@ -49,7 +52,7 @@ export const LawDetailPage = () => {
 
     return (
         <>
-            { !loading && law && <LawDetails law={law} likeHandler={voteHandler.bind(null, 1)} dislikeHandler={voteHandler.bind(null, -1)} authorized={authorized} /> }
+            { !loading && law && <LawDetails law={law} voteHandler={voteHandler} authorized={authorized} /> }
         </>
     )
 }

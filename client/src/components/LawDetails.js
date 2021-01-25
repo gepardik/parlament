@@ -1,18 +1,19 @@
-import React from 'react'
+import React, {useState} from 'react'
 import likeIcon from '../icons/like.svg'
 import dislikeIcon from '../icons/dislike.svg'
-import {NavLink} from "react-router-dom";
-import {FacebookShareButton} from "react-share";
-import FacebookIcon from "../icons/facebook.svg";
-import TwitterShareButton from "react-share/es/TwitterShareButton";
-import TwitterIcon from "../icons/twitter.svg";
+import {NavLink} from "react-router-dom"
+import {FacebookShareButton} from "react-share"
+import FacebookIcon from "../icons/facebook.svg"
+import TwitterShareButton from "react-share/es/TwitterShareButton"
+import TwitterIcon from "../icons/twitter.svg"
 
-export const LawDetails = ({ law, likeHandler, dislikeHandler, authorized }) => {
+export const LawDetails = ({ law, likeHandler, voteHandler, authorized }) => {
     const url = String(window.location)  //"http://sambala.ee/detail/5fcd225e0455b323a075afd0" //String(window.location)
     let title = `Vote for the Law!`
     const monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ]
+    const [checked, setChecked] = useState(false)
     const [month, date, year]    = new Date(law.last_voting_date).toLocaleDateString("en-US").split("/")
     const monthName = monthNames[month - 1]
     const prepareVideoUrl = url => {
@@ -109,6 +110,14 @@ export const LawDetails = ({ law, likeHandler, dislikeHandler, authorized }) => 
                             <div className="section-heading">
                                 <h5>Vote</h5>
                             </div>
+                            <br/>
+                            <div className="form-check text-left">
+                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" onChange={() => setChecked(!checked)} />
+                                <label className="form-check-label" htmlFor="flexCheckDefault">
+                                    Have you read and understand the implications of this Bill?
+                                </label>
+                            </div>
+                            <br/>
                             <h3>Last voting Date: <span className="text-danger">{date} of {monthName} {year}</span></h3>
                             {
                                 new Date(law.last_voting_date) >= new Date()
@@ -116,7 +125,7 @@ export const LawDetails = ({ law, likeHandler, dislikeHandler, authorized }) => 
                                     <>
                                         <button
                                             className="btn btn-success btn m-2"
-                                            onClick={likeHandler}
+                                            onClick={() => voteHandler(1, checked)}
                                         >
                                             <img src={likeIcon} alt=""/>
                                             &nbsp;
@@ -124,7 +133,7 @@ export const LawDetails = ({ law, likeHandler, dislikeHandler, authorized }) => 
                                         </button>
                                         <button
                                             className="btn btn-danger btn m-2"
-                                            onClick={dislikeHandler}
+                                            onClick={() => voteHandler(-1, checked)}
                                             >
                                             <img src={dislikeIcon} alt=""/>
                                             &nbsp;
