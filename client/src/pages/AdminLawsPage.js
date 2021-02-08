@@ -9,6 +9,8 @@ import {VideoInput} from "../components/VideoInput"
 import DatePicker from "react-datepicker"
 import {useMessage} from "../hooks/message.hook"
 import "react-datepicker/dist/react-datepicker.css"
+import firebase from 'firebase/app'
+import 'firebase/storage'
 
 export const AdminLawsPage = () => {
     const message = useMessage()
@@ -18,11 +20,30 @@ export const AdminLawsPage = () => {
     const [law, setLaw] = useState({
         title: '',
         content: '',
-        video: ['']
+        video: [''],
+        pdf: []
     })
-    console.log(law)
     const startDate = new Date()
     const [endDate, setEndDate] = useState(new Date())
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAZ6N3Inu4t3PTSJkvsPmgAULyxmc4v1-0",
+        authDomain: "fe-upload-1.firebaseapp.com",
+        projectId: "fe-upload-1",
+        storageBucket: "fe-upload-1.appspot.com",
+        messagingSenderId: "557835014504",
+        appId: "1:557835014504:web:2434f524b9621c3f2e46dd"
+    }
+
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }else {
+        firebase.app(); // if already initialized, use that one
+    }
+
+    const storage = firebase.storage()
+    const [files, setFiles] = useState([])
+
 
     useEffect(() => {
         window.M.updateTextFields()
@@ -85,6 +106,31 @@ export const AdminLawsPage = () => {
     const changeDateHandler = (date) => {
         setEndDate(date)
         setLaw({...law, last_voting_date: date} )
+    }
+
+    const fileChangeHandler = event => {
+        if (!event.target.files.length) {
+            return
+        }
+
+        setFiles(Array.from(event.target.files))
+    }
+
+    async function fileUploadHandler() {
+        files.forEach((file, index) => {
+            const ref = storage.ref(`upload/${file.name}`)
+            const task = ref.put(file)
+
+            task.on('state_changed', snapshot => {
+                const percentage = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0)
+            }, error => {
+                console.log(error)
+            }, () => {
+                task.snapshot.ref.getDownloadURL().then(url => {
+                    setLaw({...law, pdf: [...law.pdf, url]})
+                })
+            })
+        })
     }
 
     return (
@@ -150,6 +196,12 @@ export const AdminLawsPage = () => {
                         console.log( 'Focus.', editor );
                     } }
                 />
+            </div>
+            <br/>
+            <div className="mb-3">
+                <label htmlFor="pdfFile" className="form-label">Add PDF file:&nbsp;</label>
+                <input type="file" multiple="true" id="pdfFile" onChange={fileChangeHandler}/>
+                { files.length !== 0 && (<button className='btn btn-success' onClick={fileUploadHandler}>Upload</button>)}
             </div>
             <br />
             <div className="input-group mb-3 align-middle">

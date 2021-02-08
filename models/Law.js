@@ -42,6 +42,9 @@ const schema = new Schema({
     },
     video: {
         type: [String]
+    },
+    pdf: {
+        type: [String]
     }
 })
 
