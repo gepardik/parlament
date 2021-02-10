@@ -105,6 +105,9 @@ export const useRoutes = isAuthenticated => {
             <Route path="/detail/:id" exact>
                 <DetailPage />
             </Route>
+            <Route path="/law/detail/:id">
+                <LawDetailPage />
+            </Route>
             <Redirect to="/current" />
         </Switch>
     )

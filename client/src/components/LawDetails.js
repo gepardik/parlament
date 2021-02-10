@@ -154,7 +154,9 @@ export const LawDetails = ({ law, likeHandler, voteHandler, authorized }) => {
 
                         </div>
                         :
-                        <h3 className='text-danger'>You must be authorized to vote</h3>
+                        <div className="vote-box m-4 p-4 text-center">
+                            <h3 className='text-danger'>You must be authorized to vote</h3>
+                        </div>
                     }
                 </div>
             </div>
