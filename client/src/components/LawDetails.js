@@ -6,6 +6,7 @@ import {FacebookShareButton} from "react-share"
 import FacebookIcon from "../icons/facebook.svg"
 import TwitterShareButton from "react-share/es/TwitterShareButton"
 import TwitterIcon from "../icons/twitter.svg"
+import DownloadIcon from "../icons/download.svg"
 
 export const LawDetails = ({ law, likeHandler, voteHandler, authorized }) => {
     const url = String(window.location)  //"http://sambala.ee/detail/5fcd225e0455b323a075afd0" //String(window.location)
@@ -50,6 +51,14 @@ export const LawDetails = ({ law, likeHandler, voteHandler, authorized }) => {
                     <div className="card-body m-4 p-4">
                         <h5 className="card-title mb-4">{law.title}</h5>
                         <p className="card-text" dangerouslySetInnerHTML={{ __html: law.content }} ></p>
+                        { law.pdf && <a
+                            className="btn btn-info"
+                            href={law.pdf}
+                            target="_blank"
+                        >
+                            <img src={DownloadIcon} className="mr-2" />
+                            Download PDF
+                        </a>}
                     </div>
                     {
                         law.video.map((video, index) => {

@@ -44,7 +44,7 @@ const schema = new Schema({
         type: [String]
     },
     pdf: {
-        type: [String]
+        type: String
     }
 })
 

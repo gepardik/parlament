@@ -11,6 +11,8 @@ import {useMessage} from "../hooks/message.hook"
 import "react-datepicker/dist/react-datepicker.css"
 import firebase from 'firebase/app'
 import 'firebase/storage'
+import {Loader} from "../components/Loader";
+import checkIcon from "../icons/check.svg"
 
 export const AdminLawsPage = () => {
     const message = useMessage()
@@ -21,7 +23,7 @@ export const AdminLawsPage = () => {
         title: '',
         content: '',
         video: [''],
-        pdf: []
+        pdf: null
     })
     const startDate = new Date()
     const [endDate, setEndDate] = useState(new Date())
@@ -43,6 +45,8 @@ export const AdminLawsPage = () => {
 
     const storage = firebase.storage()
     const [files, setFiles] = useState([])
+    const [fileLoading, setFileLoading] = useState(false)
+    const [fileUploaded, setFileUploaded] = useState(false)
 
 
     useEffect(() => {
@@ -109,6 +113,7 @@ export const AdminLawsPage = () => {
     }
 
     const fileChangeHandler = event => {
+        setFileUploaded(false)
         if (!event.target.files.length) {
             return
         }
@@ -117,18 +122,19 @@ export const AdminLawsPage = () => {
     }
 
     async function fileUploadHandler() {
-        files.forEach((file, index) => {
-            const ref = storage.ref(`upload/${file.name}`)
-            const task = ref.put(file)
-
-            task.on('state_changed', snapshot => {
-                const percentage = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0)
-            }, error => {
-                console.log(error)
-            }, () => {
-                task.snapshot.ref.getDownloadURL().then(url => {
-                    setLaw({...law, pdf: [...law.pdf, url]})
-                })
+        const file = files[0]
+        const ref = storage.ref(`upload/${Math.floor(Math.random() * 1000000)}${file.name}`)
+        const task = ref.put(file)
+        setFileLoading(true)
+        task.on('state_changed', snapshot => {
+            const percentage = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0)
+        }, error => {
+            console.log(error)
+        }, () => {
+            task.snapshot.ref.getDownloadURL().then(url => {
+                setLaw({...law, pdf: url})
+                setFileLoading(false)
+                setFileUploaded(true)
             })
         })
     }
@@ -201,7 +207,9 @@ export const AdminLawsPage = () => {
             <div className="mb-3">
                 <label htmlFor="pdfFile" className="form-label">Add PDF file:&nbsp;</label>
                 <input type="file" multiple="true" id="pdfFile" onChange={fileChangeHandler}/>
-                { files.length !== 0 && (<button className='btn btn-success' onClick={fileUploadHandler}>Upload</button>)}
+                { files.length !== 0 && !fileUploaded && !fileLoading && (<button className='btn btn-success' onClick={fileUploadHandler}>Upload</button>)}
+                { fileLoading && <Loader />}
+                { fileUploaded && <img src={checkIcon} />}
             </div>
             <br />
             <div className="input-group mb-3 align-middle">

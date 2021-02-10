@@ -49,7 +49,8 @@ router.post('/create', auth, async (req, res) => {
             country: req.body.country,
             local: req.body.local,
             last_voting_date: req.body.last_voting_date,
-            video: req.body.video
+            video: req.body.video,
+            pdf: req.body.pdf
         })
 
         await law.save()
