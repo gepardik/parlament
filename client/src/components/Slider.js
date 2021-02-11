@@ -10,7 +10,7 @@ export const Slider = props => {
     const [laws, setLaws] = useState([])
     const {request} = useHttp()
     const banners = [banner1, banner2, banner3]
-    const bannerMax = banners.length - 1
+    const bannerMax = banners.length
     const monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ]
