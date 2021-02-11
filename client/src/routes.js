@@ -21,8 +21,15 @@ export const useRoutes = isAuthenticated => {
                     <LandingPage />
                 </Route>
                 <Route path="/home" exact>
-                    <Slider />
-                    <HomePage />
+                    <CountryLocalContextConsumer>
+                        {context => (
+                            <>
+                                <Slider context={context} />
+                                <HomePage context={context} />
+                            </>
+
+                        )}
+                    </CountryLocalContextConsumer>
                 </Route>
                 <Route path="/top_initiatives" exact>
                     <CountryLocalContextConsumer>
@@ -72,8 +79,15 @@ export const useRoutes = isAuthenticated => {
                 <LandingPage />
             </Route>
             <Route path="/home" exact>
-                <Slider />
-                <HomePage />
+                <CountryLocalContextConsumer>
+                    {context => (
+                        <>
+                            <Slider context={context} />
+                            <HomePage context={context} />
+                        </>
+
+                    )}
+                </CountryLocalContextConsumer>
             </Route>
             <Route path="/top_initiatives" exact>
                 <CountryLocalContextConsumer>

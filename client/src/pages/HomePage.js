@@ -3,18 +3,14 @@ import {InitiativesPage} from "./InitiativesPage";
 import {LawsPage} from "./LawsPage";
 import {CountryLocalContextConsumer} from "../context/CountryLocalContext"
 
-export const HomePage = () => {
+export const HomePage = props => {
     return (
 
-            <CountryLocalContextConsumer>
-                {context => (
-                    <div className='container'>
-                        <LawsPage type={'current'}  context={context} />
-                        <LawsPage type={'past'}  context={context} />
-                        <InitiativesPage type={'top'}  context={context} />
-                    </div>
-                )}
-            </CountryLocalContextConsumer>
+            <div className='container'>
+                <LawsPage type={'current'}  context={props.context} />
+                <LawsPage type={'past'}  context={props.context} />
+                <InitiativesPage type={'top'}  context={props.context} />
+            </div>
 
     )
 }
