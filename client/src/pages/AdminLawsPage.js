@@ -206,7 +206,7 @@ export const AdminLawsPage = () => {
             <br/>
             <div className="mb-3">
                 <label htmlFor="pdfFile" className="form-label">Add PDF file:&nbsp;</label>
-                <input type="file" multiple="true" id="pdfFile" onChange={fileChangeHandler}/>
+                <input type="file" id="pdfFile" onChange={fileChangeHandler}/>
                 { files.length !== 0 && !fileUploaded && !fileLoading && (<button className='btn btn-success' onClick={fileUploadHandler}>Upload</button>)}
                 { fileLoading && <Loader />}
                 { fileUploaded && <img src={checkIcon} />}
@@ -225,6 +225,7 @@ export const AdminLawsPage = () => {
             {
                 law.video.map((video, index, arr) => {
                     return <VideoInput
+                        key={index}
                         number={index}
                         value={law.video[index]}
                         changeHandler={changeVideoHandler}

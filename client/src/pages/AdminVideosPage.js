@@ -122,6 +122,7 @@ export const AdminVideosPage = () => {
                     {
                         video.video_current && video.video_current.map((vid, index, arr) => {
                             return <VideoInput
+                                    key={index}
                                     number={index}
                                     value={video.video_current[index]}
                                     changeHandler={changeVideoHandler.bind(null, 'video_current')}
@@ -138,6 +139,7 @@ export const AdminVideosPage = () => {
                     {
                         video.video_past && video.video_past.map((vid, index, arr) => {
                             return <VideoInput
+                                key={index}
                                 number={index}
                                 value={video.video_past[index]}
                                 changeHandler={changeVideoHandler.bind(null, 'video_past')}
@@ -154,6 +156,7 @@ export const AdminVideosPage = () => {
                     {
                         video.video_initiative && video.video_initiative.map((vid, index, arr) => {
                             return <VideoInput
+                                key={index}
                                 number={index}
                                 value={video.video_initiative[index]}
                                 changeHandler={changeVideoHandler.bind(null, 'video_initiative')}

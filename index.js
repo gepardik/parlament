@@ -14,6 +14,7 @@ app.use('/api/initiative', require('./routes/initiatives.router'))
 app.use('/api/law', require('./routes/laws.router'))
 app.use('/api/countries', require('./routes/country.router'))
 app.use('/api/video', require('./routes/videos.router'))
+app.use('/api/users', require('./routes/users.router'))
 
 if (process.env.NODE_ENV === 'production') {
     app.use('/', express.static(path.join(__dirname, 'client', 'build')))
