@@ -8,10 +8,15 @@ router.post('/create', auth, async (req, res) => {
     try {
         const {country, local, video_current, video_past, video_initiative} = req.body
 
-        const candidate = await Video.findOne({ country, local })
+        const existingVideos = await Video.findOne({ country, local })
 
-        if (candidate) {
-            return res.status(400).json({ message: 'You have already added videos for this country and local!' })
+        if (existingVideos) {
+            existingVideos.video_current = video_current
+            existingVideos.video_past = video_past
+            existingVideos.video_initiative = video_initiative
+
+            await existingVideos.save()
+            return res.status(201).json({ message: 'Videos are updated!' })
         }
 
         const videos = new Video({

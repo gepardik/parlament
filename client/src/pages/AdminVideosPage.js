@@ -14,6 +14,8 @@ export const AdminVideosPage = () => {
         video_current: [''],
         video_past: [''],
         video_initiative: [''],
+        country: '',
+        local: ''
     })
 
     const clearVideos = () => {
@@ -23,7 +25,7 @@ export const AdminVideosPage = () => {
         setVideo({...video,
             video_current: clearedVideosCurrent,
             video_past: clearedVideosPast,
-            video_initiative: clearedVideosInitiative,
+            video_initiative: clearedVideosInitiative
         })
     }
 
@@ -39,30 +41,39 @@ export const AdminVideosPage = () => {
         }
     }
 
-    const fetchVideos = useCallback(async (country, local = null) => {
-        let url = `/api/video`
-        if(country) {
-            url += `/${country}`
+    const fetchVideos = useCallback(async (country = null, local = null) => {
+        if (!country) {
+            return
+        }
 
-            if (local) {
-                url += `/${local}`
-            }
+        let url = `/api/video`
+        url += `/${country}`
+
+        if (local) {
+            url += `/${local}`
         }
         try {
-            const fetched = await request(url, 'GET')
-            setVideo(fetched)
+            const fetched = await request(url, 'GET').then(fetched => {
+                if (!fetched) {
+                    return
+                }
+                setVideo(fetched)
+            })
         } catch (e) {}
     }, [request])
 
     const changeCountryLocalHandler = (type = 'country', event) => {
-        const name = type === 'country' ? 'country' : 'local'
+        if (type === 'country') {
+            setVideo({ ...video, country: event, local: '' })
+        } else {
+            setVideo({ ...video, local: event})
+        }
 
-        setVideo({ ...video, [name]: event })
     }
 
     useEffect(() => {
         fetchVideos(video.country, video.local)
-    }, [video, fetchVideos])
+    }, [fetchVideos, video.country, video.local])
 
     const addVideoHandler = place => {
         const newVideos = [...video[place]].concat([])
