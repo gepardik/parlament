@@ -38,6 +38,7 @@ export const useAuth = () => {
 
         if (data && data.token) {
             login(data.token, data.userId, data.userName, data.role, data.userCountry, data.userLocal)
+            setTimeout(() => logout(), 3600000)
         }
         setReady(true)
     }, [login])

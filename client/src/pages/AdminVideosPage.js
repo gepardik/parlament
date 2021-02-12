@@ -53,7 +53,7 @@ export const AdminVideosPage = () => {
             url += `/${local}`
         }
         try {
-            const fetched = await request(url, 'GET').then(fetched => {
+            await request(url, 'GET').then(fetched => {
                 if (!fetched) {
                     return
                 }
