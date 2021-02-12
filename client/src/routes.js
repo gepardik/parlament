@@ -12,6 +12,7 @@ import {AdminPage} from "./pages/AdminPage"
 import {LawsPage} from "./pages/LawsPage"
 import {LawDetailPage} from "./pages/LawDetailPage"
 import {CountryLocalContextConsumer} from "./context/CountryLocalContext"
+import {SearchResultsPage} from "./pages/SearchResultsPage";
 
 export const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
@@ -68,6 +69,13 @@ export const useRoutes = isAuthenticated => {
                         )}
                     </CountryLocalContextConsumer>
                 </Route>
+                <Route path="/search/:by">
+                    <CountryLocalContextConsumer>
+                        {context => (
+                            <SearchResultsPage context={context} />
+                        )}
+                    </CountryLocalContextConsumer>
+                </Route>
                 <Redirect to="/current" />
             </Switch>
         )
@@ -121,6 +129,13 @@ export const useRoutes = isAuthenticated => {
             </Route>
             <Route path="/law/detail/:id">
                 <LawDetailPage />
+            </Route>
+            <Route path="/search/:by">
+                <CountryLocalContextConsumer>
+                    {context => (
+                        <SearchResultsPage context={context} />
+                    )}
+                </CountryLocalContextConsumer>
             </Route>
             <Redirect to="/current" />
         </Switch>

@@ -43,7 +43,7 @@ export const Slider = props => {
     return (
         <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">
             <ol className="carousel-indicators">
-                {laws.length > 0 && laws.map((law, index) => {
+                {(laws.length > 0) && laws.map((law, index) => {
                     const classActive = index === 0 ? 'active' : ''
                     return (
                         <li
@@ -81,12 +81,12 @@ export const Slider = props => {
                     )
                 })
                 ||
-                <div className="carousel-item active">
+                (<div className="carousel-item active">
                     <img src={banners[0]} className="d-block w-100" alt="..." />
                     <div className="carousel-caption d-none d-md-block">
                         <h1>Welcome to People's Vote!</h1>
                     </div>
-                </div>
+                </div>)
                 }
             </div>
             <a className="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-bs-slide="prev">

@@ -1,7 +1,6 @@
 import React from 'react'
 import {InitiativesPage} from "./InitiativesPage";
 import {LawsPage} from "./LawsPage";
-import {CountryLocalContextConsumer} from "../context/CountryLocalContext"
 
 export const HomePage = props => {
     return (

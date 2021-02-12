@@ -24,7 +24,11 @@ export const LawsList = ({ laws, pageTitle, current, context }) => {
             }
         })
         if (locals.length) {
-            localName = locals.find(local => local.code === context.local).name;
+            let newLocal = locals.find(local => local.code === context.local)
+            if (newLocal) {
+                localName = newLocal.name
+            }
+
         }
     }
 

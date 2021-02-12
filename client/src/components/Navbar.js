@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import {NavLink, useHistory} from 'react-router-dom'
 import {AuthContext} from "../context/AuthContext"
 import logo from '../img/logo.svg'
@@ -20,6 +20,12 @@ export const Navbar = () => {
         event.preventDefault()
         auth.logout()
         history.push('/home')
+    }
+
+    const [search, setSearch] = useState("")
+
+    const searchChangeHandler = event => {
+        setSearch(event.target.value)
     }
 
     return (
@@ -139,10 +145,21 @@ export const Navbar = () => {
                             </div>
                         </li>
                     </ul>
-                    <form className="form-inline my-2 my-lg-0">
-                        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
+                        <input
+                            style={{minWidth: '120px', maxWidth: '180px'}}
+                            className="form-control mr-sm-2"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                            value={search}
+                            onChange={searchChangeHandler}
+                        />
+                        <a
+                            href={`/search/${search}`}
+                            className="btn btn-outline-success my-2 my-sm-0"
+                        >
+                            Search
+                        </a>
                 </div>
             </nav>
             <div style={{'height': '111px'}}></div>

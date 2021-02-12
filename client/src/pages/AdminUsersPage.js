@@ -10,7 +10,7 @@ export const AdminUsersPage = () => {
     }
     const  message = useMessage()
     const auth = useContext(AuthContext)
-    const {request, loading} = useHttp()
+    const {request} = useHttp()
     const [users, setUsers] = useState([])
     const fetchUsers = useCallback(async () => {
         let url = `/api/users`

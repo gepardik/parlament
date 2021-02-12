@@ -127,7 +127,7 @@ export const AdminLawsPage = () => {
         const task = ref.put(file)
         setFileLoading(true)
         task.on('state_changed', snapshot => {
-            const percentage = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0)
+            //const percentage = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0)
         }, error => {
             console.log(error)
         }, () => {
@@ -209,7 +209,7 @@ export const AdminLawsPage = () => {
                 <input type="file" id="pdfFile" onChange={fileChangeHandler}/>
                 { files.length !== 0 && !fileUploaded && !fileLoading && (<button className='btn btn-success' onClick={fileUploadHandler}>Upload</button>)}
                 { fileLoading && <Loader />}
-                { fileUploaded && <img src={checkIcon} />}
+                { fileUploaded && <img src={checkIcon} alt=""/>}
             </div>
             <br />
             <div className="input-group mb-3 align-middle">
