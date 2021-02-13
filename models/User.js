@@ -9,7 +9,9 @@ const schema = new Schema({
     country: {type: String, required: true},
     local: {type: String, required: true},
     role: {type: String, required: true, default: 'user'},
-    initiatives: [{ type: Types.ObjectId, ref: 'Initiative' }]
+    initiatives: [{ type: Types.ObjectId, ref: 'Initiative' }],
+    resetToken: String,
+    expireToken: Date,
 })
 
 module.exports = model('User', schema)

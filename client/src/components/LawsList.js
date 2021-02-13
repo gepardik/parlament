@@ -20,8 +20,9 @@ export const LawsList = ({ laws, pageTitle, current, context }) => {
             <th scope="col"></th>
         </tr>
     `
+
     const buttonText =
-        (userCountry === contextCountry && (userLocal === contextLocal || contextLocal === null) && current)
+        (userCountry === contextCountry && (userLocal === contextLocal || contextLocal === null || contextLocal === 'null') && current)
         ? 'Vote'
         : 'Inspect'
 

@@ -65,13 +65,17 @@ export const LoginPage = () => {
                                 onKeyPress={pressHandler}
                             />
                         </div>
-                        <button
-                            className="btn btn-primary m-1"
-                            disabled={loading}
-                            onClick={loginHandler}
-                        >
-                            Login
-                        </button>
+                        <div style={{display: 'flex', justifyContent:'space-between'}}>
+                            <button
+                                className="btn btn-primary m-1"
+                                disabled={loading}
+                                onClick={loginHandler}
+                            >
+                                Login
+                            </button>
+                            <a href="/forgot-password">Forgot Password?</a>
+                        </div>
+
                     </div>
                 </div>
             </div>

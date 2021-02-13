@@ -13,6 +13,7 @@ import {LawsPage} from "./pages/LawsPage"
 import {LawDetailPage} from "./pages/LawDetailPage"
 import {CountryLocalContextConsumer} from "./context/CountryLocalContext"
 import {SearchResultsPage} from "./pages/SearchResultsPage";
+import {ForgotPasswordPage} from "./pages/ForgotPasswordPage";
 
 export const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
@@ -85,6 +86,9 @@ export const useRoutes = isAuthenticated => {
         <Switch>
             <Route path="/" exact>
                 <LandingPage />
+            </Route>
+            <Route path="/forgot-password" exact>
+                <ForgotPasswordPage />
             </Route>
             <Route path="/home" exact>
                 <CountryLocalContextConsumer>

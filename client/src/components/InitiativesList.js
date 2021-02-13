@@ -4,7 +4,7 @@ import {AuthContext} from "../context/AuthContext"
 import Pagination from "./Pagination";
 
 export const InitiativesList = ({ initiatives, pageTitle, context }) => {
-    const { country: contextCountry } = context
+    const contextCountry = context ? context.country : null
     const { userCountry } = useContext(AuthContext)
     const buttonText = userCountry === contextCountry ? 'Vote' : 'Inspect'
     const tableHead = `
