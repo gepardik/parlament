@@ -1,12 +1,14 @@
 import React, {useCallback, useState, useEffect} from 'react'
-import {Link, useParams} from "react-router-dom"
+import {useParams} from "react-router-dom"
 import {useHttp} from "../hooks/http.hook"
 import {CountryRegionData} from "react-country-region-selector"
+import Pagination from "../components/Pagination";
 
 export const SearchResultsPage = props => {
     const countryContext = props.context
     const phrase = useParams().by
     const [result, setResult] = useState(null)
+    const [tableHead, setTableHead] = useState('')
     const {request} = useHttp()
     let url = `/api/search/${phrase}`
 
@@ -49,7 +51,47 @@ export const SearchResultsPage = props => {
                 })
             }
             initiatives = initiatives.filter(ini => ini.country === countryContext.country)
-            setResult({initiatives, laws})
+
+            setTableHead(`
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Title</th>
+                        <th>Actions</th>
+                    </tr>`)
+
+            const lawsHTML = laws.map((law, index) => {
+                return (
+                    `<tr key="${law._id}">
+                        <th scope="row">
+                            ${index + 1}.
+                        </th>
+                        <td class='col-md-9'>
+                            ${law.title}
+                        </td>
+                        <td>
+                            <a href="/law/detail/${law._id}" class="btn btn-info">Inspect</a>
+                        </td>
+                    </tr>`
+                )
+            })
+
+            const iniHTML = initiatives.map((initiative, index) => {
+                return (
+                    `<tr key="${initiative._id}">
+                        <th scope="row">
+                            ${index + 1}.
+                        </th>
+                        <td class='col-md-9'>
+                            ${initiative.title}
+                        </td>
+                        <td>
+                            <a href="/detail/${initiative._id}" class="btn btn-info">Inspect</a>
+                        </td>
+                    </tr>`
+                )
+            })
+
+            setResult({initiatives: iniHTML, laws: lawsHTML})
         }
 
     }, [countryContext.country, countryContext.local])
@@ -76,37 +118,11 @@ export const SearchResultsPage = props => {
                         result && result.laws && result.laws.length > 0 &&
                             <>
                                 <h3 className="text-center">Laws</h3>
-                                <table className="table bg-white table-hover">
-                                    <thead className="text-dark">
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col">Title</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {result.laws.map((law, index) => {
-                                        return (
-                                            <tr key={law._id}>
-                                                <th scope="row">
-                                                    {index + 1}.
-                                                </th>
-                                                <td className={'col-md-9'}>
-                                                    {law.title}
-                                                </td>
-                                                <td>
-                                                    <Link
-                                                        to={`/law/detail/${law._id}`}
-                                                        className="btn btn-info"
-                                                    >
-                                                        Inspect
-                                                    </Link>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })}
-                                    </tbody>
-                                </table>
+                                <Pagination
+                                    tableHead={tableHead}
+                                    items={result.laws}
+                                    limit={10}
+                                />
                             </>
                     }
                     {
@@ -114,37 +130,11 @@ export const SearchResultsPage = props => {
                             <>
                                 <hr/>
                                 <h3 className="text-center">Initiatives</h3>
-                                <table className="table bg-white table-hover">
-                                    <thead className="text-dark">
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col">Title</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {result.initiatives.map((initiative, index) => {
-                                        return (
-                                            <tr key={initiative._id}>
-                                                <th scope="row">
-                                                    {index + 1}.
-                                                </th>
-                                                <td className={'col-md-9'}>
-                                                    {initiative.title}
-                                                </td>
-                                                <td>
-                                                    <Link
-                                                        to={`/detail/${initiative._id}`}
-                                                        className="btn btn-info"
-                                                    >
-                                                        Inspect
-                                                    </Link>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })}
-                                    </tbody>
-                                </table>
+                                <Pagination
+                                    tableHead={tableHead}
+                                    items={result.initiatives}
+                                    limit={10}
+                                />
                             </>
                     }
                 </div>

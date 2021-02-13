@@ -56,7 +56,7 @@ export const LawDetails = ({ law, likeHandler, voteHandler, authorized }) => {
                             href={law.pdf}
                             target="_blank"
                             rel="noreferrer"
-                        >s
+                        >
                             <img src={DownloadIcon} className="mr-2" alt="" />
                             Download PDF
                         </a>}

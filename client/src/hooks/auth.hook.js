@@ -41,7 +41,7 @@ export const useAuth = () => {
             setTimeout(() => logout(), 3600000)
         }
         setReady(true)
-    }, [login])
+    }, [login, logout])
 
     return { login, logout, token, userId, userName, role, userCountry, userLocal, ready }
 }

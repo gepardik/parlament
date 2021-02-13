@@ -24,7 +24,7 @@ export const Slider = props => {
             if(context.country) {
                 url += `/${context.country}`
 
-                if (context.local) {
+                if (context.local && context.local !== 'null') {
                     url += `/${context.local}`
                 }
             }
