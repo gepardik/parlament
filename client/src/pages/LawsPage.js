@@ -18,15 +18,16 @@ export const LawsPage = props => {
             if(context.country) {
                 url += `/${context.country}`
 
-                if (context.local) {
+                if (context.local && context.local !== 'null') {
                     url += `/${context.local}`
                 }
             }
         }
 
         try {
-            const fetched = await request(url, 'GET')
-            setLaws(fetched)
+            await request(url, 'GET').then(fetched => {
+                setLaws(fetched)
+            })
         } catch (e) {}
     }, [request, props.type])
 
