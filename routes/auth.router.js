@@ -109,60 +109,109 @@ router.post(
 })
 
 //   /api/forgot-password
-router.post('/forgot-password', (req, res) => {
-    crypto.randomBytes(32, async (err, buffer) => {
-        if (err) {
-            console.log(err)
-        }
-        const token = buffer.toString("hex")
-        await User.findOne({email: req.body.email}).then(user => {
-            if (!user) {
-                return res.status(422).json({message: 'Email not found!'})
-            }
-            user.resetToken = token
-            user.expireToken = Date.now() + 3600000
-            user.save().then(  (result) => {
+router.post(
+    '/forgot-password',
+    [ check('email', 'Incorrect e-mail address').normalizeEmail().isEmail() ],
+    async (req, res) => {
+        try {
+            const errors = validationResult(req)
 
-// create reusable transporter object using the default SMTP transport
+            if (!errors.isEmpty()) {
+                return res.status(200).json({
+                    errors: errors.array(),
+                    message: 'Incorrect email'
+                })
+            }
+
+            crypto.randomBytes(32, async (err, buffer) => {
+                if (err) {
+                    console.log(err)
+                }
+                const token = buffer.toString("hex")
+                const {email} = req.body
+
+
+                const user = await User.findOne({ email })
+                if (!user) {
+                    return res.status(200).json({message: 'Email not found!'})
+                }
+                user.resetToken = token
+                user.expireToken = Date.now() + 3600000
+                user.save()
 
                 const transporter = nodemailer.createTransport({
-                    host: 'smtp.ethereal.email',
+                    host: 'smtp.hostinger.ru',
                     port: 587,
                     auth: {
-                        user: 'amiya32@ethereal.email',
-                        pass: 'U8JV4D28xPD7A14s1s'
+                        user: 'no-reply@kunstnik.com',
+                        pass: 'Tvlkek123'
                     }
-                });
-
+                })
 
                 let message = {
-                    from: 'Amiya West <amiya32@ethereal.email>',
-                    to: 'Galina Morozova <t030626@gmail.com>',
-                    subject: 'Nodemailer is unicode friendly ✔',
-                    text: 'Hello to myself!',
-                    html: '<p><b>Hello</b> to myself!</p>'
-                };
+                    from: "People's Vote <no-reply@kunstnik.com>",
+                    to: `${user.first_name} ${user.last_name} <${user.email}>`,
+                    subject: "Password reset",
+                    text: `Hello dear ${user.first_name} ${user.last_name}.
+                   Here is the link for resetting the password for user ${user.username}: 
+                   http://sambala.ee/password-reset/${user.resetToken}
+                   The link is available during 1 hour after receiving this e-mail.
+                   Ignore this letter if you didn't request for password reset.
+                   Best regards,
+                   People's Vote Team
+            `,
+                    html: `<p><b>Hello dear ${user.first_name} ${user.last_name}</b>.</p>
+                    <p> Here is the link for resetting the password for user <b>${user.username}</b>:</p>
+                    <p><a href="http://sambala.ee/password-reset/${user.resetToken}">Password reset link</a></p>
+                    <p>The link is available during 1 hour after receiving this e-mail.</p>
+                    <p>Ignore this letter if you didn't request for password reset.</p>
+                    <br />
+                    <p>Best regards,
+                    <br />
+                    People's Vote Team
+                    </p>
+            `
+                }
 
-                transporter.sendMail(message, (err, info) => {
+                await transporter.sendMail(message, (err) => {
                     if (err) {
-                        console.log('Error occurred. ' + err.message);
-                        return process.exit(1);
+                        res.status(500).json({message: 'Error!'})
                     }
+                })
 
-                    console.log('Message sent: %s', info.messageId);
-                    // Preview only available when sending through an Ethereal account
-                    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-                });
+                res.status(201).json({message: 'Check your e-mail!'})
 
-                // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-                // Preview only available when sending through an Ethereal account
-                //console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-
-                return res.status(201).json({message: 'Check your e-mail!'})
             })
-        })
-    })
+        } catch (e) {
+            res.status(500).json({message: 'Something went wrong! Try again!'})
+        }
+})
+
+//   /api/reset-password
+router.post('/reset-password',  async(req, res) => {
+    try {
+        const resetToken = req.body.token
+        const hashedPassword = await bcrypt.hash(req.body.password, 12)
+        const user = await User.findOne({resetToken})
+
+        if (!user) {
+            return res.status(200).json({message: 'Wrong token! Try again!'})
+        }
+        const expireToken = new Date(user.expireToken)
+        const now = new Date()
+        if (now > expireToken) {
+            return res.status(500).json({ result: 'error', message: 'The password reset token is expired! Try again!' })
+        }
+
+        user.password = hashedPassword
+        user.resetToken = ''
+        user.expireToken = ''
+        user.save()
+        return res.status(201).json({ result: 'success', message: `Password is reset for user ${user.username}! You will be redirected to login page in 3 seconds!`})
+
+    } catch (e) {
+        return res.status(500).json({message: 'Something went wrong! Try again!'})
+    }
 })
 
 module.exports = router

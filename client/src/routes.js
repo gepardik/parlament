@@ -14,6 +14,7 @@ import {LawDetailPage} from "./pages/LawDetailPage"
 import {CountryLocalContextConsumer} from "./context/CountryLocalContext"
 import {SearchResultsPage} from "./pages/SearchResultsPage";
 import {ForgotPasswordPage} from "./pages/ForgotPasswordPage";
+import {PasswordResetPage} from "./pages/PasswordResetPage";
 
 export const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
@@ -89,6 +90,9 @@ export const useRoutes = isAuthenticated => {
             </Route>
             <Route path="/forgot-password" exact>
                 <ForgotPasswordPage />
+            </Route>
+            <Route path="/password-reset/:token" exact>
+                <PasswordResetPage />
             </Route>
             <Route path="/home" exact>
                 <CountryLocalContextConsumer>
