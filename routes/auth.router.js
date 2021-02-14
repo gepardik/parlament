@@ -122,27 +122,26 @@ router.post('/forgot-password', (req, res) => {
             user.resetToken = token
             user.expireToken = Date.now() + 3600000
             user.save().then( async (result) => {
-                let testAccount = await nodemailer.createTestAccount()
 
 // create reusable transporter object using the default SMTP transport
                 let transporter = nodemailer.createTransport({
-                    host: "smtp.ethereal.email",
+                    host: "smtp.hostinger.ru",
                     port: 587,
                     secure: false, // true for 465, false for other ports
                     auth: {
-                        user: testAccount.user, // generated ethereal user
-                        pass: testAccount.pass, // generated ethereal password
+                        user: 'no-reply@kunstnik.com', // generated ethereal user
+                        pass: 'Tvlkek123', // generated ethereal password
                     },
                 });
                 let info = await transporter.sendMail({
-                    from: '"Fred Foo 👻" <foo@example.com>', // sender address
+                    from: '"Peoples Vote" <no-reply@kunstnik.com>', // sender address
                     to: "t030626@gmail.com", // list of receivers
-                    subject: "Hello ✔", // Subject line
+                    subject: "Hello", // Subject line
                     text: "Hello world?", // plain text body
                     html: "<b>Hello world?</b>", // html body
                 });
 
-                //console.log("Message sent: %s", info.messageId);
+                console.log("Message sent: %s", info.messageId);
                 // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
                 // Preview only available when sending through an Ethereal account
