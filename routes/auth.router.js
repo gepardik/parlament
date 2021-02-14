@@ -134,10 +134,9 @@ router.post('/forgot-password', (req, res) => {
                     },
                 });
                 let info = await transporter.sendMail({
-                    from: '"Peoples Vote" <no-reply@kunstnik.com>', // sender address
-                    to: "t030626@gmail.com", // list of receivers
+                    from: "no-reply@kunstnik.com", // sender address
+                    to: user.email, // list of receivers
                     subject: "Hello", // Subject line
-                    text: "Hello world?", // plain text body
                     html: "<b>Hello world?</b>", // html body
                 });
 
