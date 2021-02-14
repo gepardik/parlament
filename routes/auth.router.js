@@ -121,26 +121,39 @@ router.post('/forgot-password', (req, res) => {
             }
             user.resetToken = token
             user.expireToken = Date.now() + 3600000
-            user.save().then( async (result) => {
+            user.save().then(  (result) => {
 
 // create reusable transporter object using the default SMTP transport
-                let transporter = nodemailer.createTransport({
-                    host: "smtp.hostinger.ru",
+
+                const transporter = nodemailer.createTransport({
+                    host: 'smtp.ethereal.email',
                     port: 587,
-                    secure: false, // true for 465, false for other ports
                     auth: {
-                        user: 'no-reply@kunstnik.com', // generated ethereal user
-                        pass: 'Tvlkek123', // generated ethereal password
-                    },
-                });
-                let info = await transporter.sendMail({
-                    from: "no-reply@kunstnik.com", // sender address
-                    to: user.email, // list of receivers
-                    subject: "Hello", // Subject line
-                    html: "<b>Hello world?</b>", // html body
+                        user: 'amiya32@ethereal.email',
+                        pass: 'U8JV4D28xPD7A14s1s'
+                    }
                 });
 
-                console.log("Message sent: %s", info.messageId);
+
+                let message = {
+                    from: 'Amiya West <amiya32@ethereal.email>',
+                    to: 'Galina Morozova <t030626@gmail.com>',
+                    subject: 'Nodemailer is unicode friendly ✔',
+                    text: 'Hello to myself!',
+                    html: '<p><b>Hello</b> to myself!</p>'
+                };
+
+                transporter.sendMail(message, (err, info) => {
+                    if (err) {
+                        console.log('Error occurred. ' + err.message);
+                        return process.exit(1);
+                    }
+
+                    console.log('Message sent: %s', info.messageId);
+                    // Preview only available when sending through an Ethereal account
+                    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+                });
+
                 // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
                 // Preview only available when sending through an Ethereal account
