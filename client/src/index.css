@@ -124,7 +124,7 @@ h1, h2, h3, h4, h6 {
 }
 
 .dropdown-menu {
-    max-height: 600px;
+    max-height: 500px;
     overflow-y: auto;
 }
 
