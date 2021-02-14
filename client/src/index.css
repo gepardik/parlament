@@ -123,6 +123,11 @@ h1, h2, h3, h4, h6 {
     z-index: 100;
 }
 
+.dropdown-menu {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
 .nav-link.with-icon{
     background-repeat: no-repeat!important;
     background-position: left!important;
