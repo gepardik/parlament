@@ -200,7 +200,7 @@ router.post('/reset-password',  async(req, res) => {
         const expireToken = new Date(user.expireToken)
         const now = new Date()
         if (now > expireToken) {
-            return res.status(500).json({ result: 'error', message: 'The password reset token is expired! Try again!' })
+            return res.status(200).json({ result: 'error', message: 'The password reset token is expired! Try again!' })
         }
 
         user.password = hashedPassword
