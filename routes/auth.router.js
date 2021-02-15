@@ -140,16 +140,16 @@ router.post(
                 user.save()
 
                 const transporter = nodemailer.createTransport({
-                    host: 'smtp.hostinger.ru',
-                    port: 587,
+                    host: config.get('mailHost'),
+                    port: config.get('mailPort'),
                     auth: {
-                        user: 'no-reply@kunstnik.com',
-                        pass: 'Tvlkek123'
+                        user: config.get('mailUser'),
+                        pass: config.get('mailPass')
                     }
                 })
 
                 let message = {
-                    from: "People's Vote <no-reply@kunstnik.com>",
+                    from: `People's Vote <${config.get('mailUser')}>`,
                     to: `${user.first_name} ${user.last_name} <${user.email}>`,
                     subject: "Password reset",
                     text: `Hello dear ${user.first_name} ${user.last_name}.
@@ -162,7 +162,7 @@ router.post(
             `,
                     html: `<p><b>Hello dear ${user.first_name} ${user.last_name}</b>.</p>
                     <p> Here is the link for resetting the password for user <b>${user.username}</b>:</p>
-                    <p><a href="http://sambala.ee/password-reset/${user.resetToken}">Password reset link</a></p>
+                    <p><a href="${config.get('baseUrl')}/password-reset/${user.resetToken}">Password reset link</a></p>
                     <p>The link is available during 1 hour after receiving this e-mail.</p>
                     <p>Ignore this letter if you didn't request for password reset.</p>
                     <br />
