@@ -19,8 +19,18 @@ export const PasswordResetPage = () => {
     }
 
     const resetHandler = async () => {
+        const reg = /^(?=.*[A-Z])(?=.*\d).*$/
+        if (!password1 || !password2) {
+            message('Enter password!')
+            return
+        }
         if (password1 !== password2) {
-            message("Passwords mismatch!")
+            message('Password mismatch!')
+            return
+        }
+
+        if (password1.length < 8 || !password1.match(reg)) {
+            message('Password minimum length should be 8 signs and it should have at least 1 uppercase and 1 numeric')
             return
         }
 
@@ -42,7 +52,11 @@ export const PasswordResetPage = () => {
                 <div className="card" style={{width: '22rem'}}>
                     <div className="card-body">
                         <div className="form-group">
-                            <label htmlFor="password1">New Password</label>
+                            <label htmlFor="password1">
+                                New Password
+                                <br/>
+                                <small className="text-info">(Min. length 8 signs, at least 1 uppercase and 1 numeric)</small>
+                            </label>
                             <input
                                 type="password"
                                 className="form-control"
